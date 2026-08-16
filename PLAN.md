@@ -102,7 +102,7 @@ phase 3 rather than trusted from four questions:
 
 ## Phase 3 — Harness
 
-**Status: not started. Next.**
+**Status: code complete, not yet run. Blocked on an API key.**
 
 Python, not n8n — this needs repeatability and metrics.
 
@@ -125,6 +125,19 @@ to `reports/tmp/`, which is gitignored.
 
 `data/testset.json` freezes once this phase has run — changing it
 afterwards breaks comparison with earlier runs. Ask first.
+
+**Built.** `src/generation.py` (generator + judge, both prompts frozen as
+module constants) and `src/harness.py`. Run with
+`python src/harness.py`; `--tmp` writes to the gitignored scratch
+directory instead.
+
+**One specified thing could not be built as written.** CLAUDE.md asks for
+the judge at temperature 0. **Claude Opus 5 rejects `temperature`** — the
+parameter was removed on Opus 4.7 and later and returns a 400. The judge
+instead runs with thinking disabled at `effort: "low"` and a
+schema-constrained verdict, which is the nearest the model offers. The
+actual parameters sent are recorded verbatim in every run artefact, so a
+reader sees what ran rather than what was intended.
 
 ---
 

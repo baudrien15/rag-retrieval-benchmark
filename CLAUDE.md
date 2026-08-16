@@ -82,8 +82,13 @@ Always report **per category**, not just aggregate.
   Chosen *because* it is modest. A stronger model papers over bad
   retrieval and compresses the gap between configurations, which would
   destroy the experiment.
-- **Judge:** Claude Opus 5, temperature 0. Must be a different model
-  from the generator — models tend to favour their own output.
+- **Judge:** Claude Opus 5. Must be a different model from the
+  generator — models tend to favour their own output.
+  **Temperature 0 is not achievable here**: Claude Opus 5 removed
+  `temperature` (400 on any value). The judge runs with thinking
+  disabled at `effort: "low"` and a schema-constrained verdict instead —
+  the nearest available substitute. The generator, Haiku 4.5, does still
+  accept `temperature` and runs at 0 as specified.
 
 Document this reasoning in the README. It is a selling point, not a
 footnote.
