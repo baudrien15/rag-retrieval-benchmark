@@ -1,0 +1,23 @@
+.env
+*.env
+!.env.example
+
+qdrant_storage/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+.DS_Store
+.vscode/
+.idea/
+
+# Run artefacts are the evidence for the published numbers, so
+# reports/runs/ is committed. Scratch and debug runs are not.
+# Note the trailing /* rather than /: git cannot re-include a file whose
+# parent directory is itself excluded, so the negation below would be
+# dead if this line ignored the directory.
+reports/tmp/*
+!reports/tmp/.gitkeep
+
+NOTES.md

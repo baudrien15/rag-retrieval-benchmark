@@ -1,0 +1,13 @@
+services:
+  qdrant:
+    # Pinned once ingestion first succeeded. Do not float this back to
+    # :latest — a Qdrant upgrade between two runs would change retrieval
+    # behaviour underneath the comparison.
+    image: qdrant/qdrant:v1.19.0
+    container_name: rag-bench-qdrant
+    ports:
+      - "6333:6333"   # REST
+      - "6334:6334"   # gRPC
+    volumes:
+      - ./qdrant_storage:/qdrant/storage
+    restart: unless-stopped

@@ -1,0 +1,20 @@
+# Versions intentionally unpinned for the first install.
+# Pin them once the first full run succeeds.
+qdrant-client
+anthropic
+python-dotenv
+pandas
+matplotlib
+tabulate
+
+# BGE-M3 dense + sparse, and BGE-reranker-v2-m3 in phase 3.
+#
+# fastembed was the first choice and does not work here: as of 0.8.0 it
+# carries no bge-m3 in either TextEmbedding or SparseTextEmbedding, and
+# only bge-reranker-base rather than v2-m3. Using it would have meant
+# substituting all three models. FlagEmbedding is the alternative named
+# in CLAUDE.md and keeps the model choices as specified.
+#
+# It pulls torch and transformers — a large install. That is the price
+# of not changing the models.
+FlagEmbedding

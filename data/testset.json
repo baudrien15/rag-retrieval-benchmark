@@ -1,0 +1,244 @@
+{
+  "questions": [
+    {
+      "id": "q01",
+      "question": "How much is the hot stone massage?",
+      "category": "exact_term",
+      "expected_doc_ids": ["pricing_massage"],
+      "expected_behavior": "answer",
+      "expected_answer": "The Hot Stone Massage is 95 EUR for 75 minutes."
+    },
+    {
+      "id": "q02",
+      "question": "How long does the Lumen Signature Journey take?",
+      "category": "exact_term",
+      "expected_doc_ids": ["treatments_signature"],
+      "expected_behavior": "answer",
+      "expected_answer": "Allow three hours and fifteen minutes from arrival to departure, of which two hours and forty minutes is treatment time."
+    },
+    {
+      "id": "q03",
+      "question": "How many hours ahead do I need to cancel?",
+      "category": "exact_term",
+      "expected_doc_ids": ["cancellation_policy"],
+      "expected_behavior": "answer",
+      "expected_answer": "At least 24 hours before the appointment. Cancelling less than 24 hours ahead is charged at 50% of the treatment price."
+    },
+    {
+      "id": "q04",
+      "question": "What does the seaweed wrap cost?",
+      "category": "exact_term",
+      "expected_doc_ids": ["pricing_body_rituals"],
+      "expected_behavior": "answer",
+      "expected_answer": "The Seaweed Wrap is 80 EUR for 60 minutes."
+    },
+    {
+      "id": "q05",
+      "question": "How long is a gift card valid?",
+      "category": "exact_term",
+      "expected_doc_ids": ["gift_cards"],
+      "expected_behavior": "answer",
+      "expected_answer": "12 months from the date of purchase. An expired card cannot be extended and has no remaining value."
+    },
+    {
+      "id": "q06",
+      "question": "How much is the monthly Serenity membership?",
+      "category": "exact_term",
+      "expected_doc_ids": ["memberships"],
+      "expected_behavior": "answer",
+      "expected_answer": "79 EUR per month."
+    },
+    {
+      "id": "q07",
+      "question": "What time do you open on Sunday?",
+      "category": "exact_term",
+      "expected_doc_ids": ["opening_hours"],
+      "expected_behavior": "answer",
+      "expected_answer": "10:00 on Sunday, closing at 17:00."
+    },
+    {
+      "id": "q08",
+      "question": "What's the minimum group size for a private booking?",
+      "category": "exact_term",
+      "expected_doc_ids": ["groups_and_events"],
+      "expected_behavior": "answer",
+      "expected_answer": "8 people."
+    },
+    {
+      "id": "q09",
+      "question": "How much deposit is taken when I book?",
+      "category": "exact_term",
+      "expected_doc_ids": ["booking_and_payment"],
+      "expected_behavior": "answer",
+      "expected_answer": "30 EUR per treatment, taken when the booking is confirmed and deducted from the final price on the day."
+    },
+    {
+      "id": "q10",
+      "question": "What does the Hydraglow facial cost?",
+      "category": "exact_term",
+      "expected_doc_ids": ["pricing_facials"],
+      "expected_behavior": "answer",
+      "expected_answer": "The Hydraglow Facial is 90 EUR for 60 minutes."
+    },
+    {
+      "id": "q11",
+      "question": "I've been training hard and my legs are wrecked. What would you suggest?",
+      "category": "semantic",
+      "expected_doc_ids": ["treatments_massage"],
+      "expected_behavior": "answer",
+      "expected_answer": "The Deep Tissue Massage: firm, slow pressure into the deeper muscle layers, suited to recovery after repeated physical effort or heavy training."
+    },
+    {
+      "id": "q12",
+      "question": "Can I bring my children?",
+      "category": "semantic",
+      "expected_doc_ids": ["house_rules"],
+      "expected_behavior": "answer",
+      "expected_answer": "No. The minimum age is 16, and under-16s are not admitted even accompanied or in the reception area."
+    },
+    {
+      "id": "q13",
+      "question": "What happens if I turn up late?",
+      "category": "semantic",
+      "expected_doc_ids": ["cancellation_policy"],
+      "expected_behavior": "answer",
+      "expected_answer": "The treatment still ends at its scheduled end time and the full price is charged. More than 20 minutes late is treated as a no-show."
+    },
+    {
+      "id": "q14",
+      "question": "Is there anywhere to unwind before my treatment?",
+      "category": "semantic",
+      "expected_doc_ids": ["facilities"],
+      "expected_behavior": "answer",
+      "expected_answer": "The relaxation lounge: twelve reclining chairs, low light, no phones, with herbal tea, water and fruit served through the day. Arriving early to sit there is encouraged."
+    },
+    {
+      "id": "q15",
+      "question": "I've never been to a spa before. What should I know?",
+      "category": "semantic",
+      "expected_doc_ids": ["first_visit"],
+      "expected_behavior": "answer",
+      "expected_answer": "Arrive 15 minutes early, bring swimwear if you want the sauna or hammam, leave jewellery at home, and complete a short health form on arrival. Robes, slippers and towels are provided."
+    },
+    {
+      "id": "q16",
+      "question": "How do I get to you without a car?",
+      "category": "semantic",
+      "expected_doc_ids": ["location_and_access"],
+      "expected_behavior": "answer",
+      "expected_answer": "Tram line 1 to the Tanneurs stop, then four minutes on foot. Bus route 26 stops at Pont Sauvetout, six minutes away. Bicycle racks are inside the archway."
+    },
+    {
+      "id": "q17",
+      "question": "My skin looks dull. Is there anything that would help?",
+      "category": "semantic",
+      "expected_doc_ids": ["treatments_facials"],
+      "expected_behavior": "answer",
+      "expected_answer": "The Hydraglow Facial, our hydration facial, aimed at skin that looks tired, flat or lacking radiance."
+    },
+    {
+      "id": "q18",
+      "question": "I'd like to give this to someone as a present.",
+      "category": "semantic",
+      "expected_doc_ids": ["gift_cards"],
+      "expected_behavior": "answer",
+      "expected_answer": "A gift card, sold in fixed amounts of 50, 100 and 200 EUR or for a named treatment. It is valid 12 months and is transferable."
+    },
+    {
+      "id": "q19",
+      "question": "I'm pregnant. Which massage can I book?",
+      "category": "multi_fact",
+      "expected_doc_ids": ["contraindications", "treatments_massage"],
+      "expected_behavior": "answer",
+      "expected_answer": "The Prenatal Massage, available from the second trimester, performed side-lying with bolster support and unscented oil. Hot stone treatment and full-body wraps are excluded during pregnancy."
+    },
+    {
+      "id": "q20",
+      "question": "How much is the Signature Journey and how long should I set aside?",
+      "category": "multi_fact",
+      "expected_doc_ids": ["pricing_body_rituals", "treatments_signature"],
+      "expected_behavior": "answer",
+      "expected_answer": "240 EUR per person, and allow three hours and fifteen minutes."
+    },
+    {
+      "id": "q21",
+      "question": "I'm on the Serenity membership. If I cancel a session at short notice, am I still charged?",
+      "category": "multi_fact",
+      "expected_doc_ids": ["memberships", "cancellation_policy"],
+      "expected_behavior": "answer",
+      "expected_answer": "Yes. The session counts as used for that month, and the standard late-cancellation charge of 50% of the treatment price applies on top."
+    },
+    {
+      "id": "q22",
+      "question": "How much is the deposit, and can I cover it with a gift card?",
+      "category": "multi_fact",
+      "expected_doc_ids": ["gift_cards", "booking_and_payment"],
+      "expected_behavior": "answer",
+      "expected_answer": "No. The 30 EUR deposit must be paid by card or in cash. The gift card can then be applied against the balance on the day."
+    },
+    {
+      "id": "q23",
+      "question": "I had surgery six weeks ago. Can I use the sauna?",
+      "category": "multi_fact",
+      "expected_doc_ids": ["contraindications", "facilities"],
+      "expected_behavior": "answer",
+      "expected_answer": "No. The sauna is one of the two heat facilities, and heat should be avoided for eight weeks after surgery, so six weeks is too soon."
+    },
+    {
+      "id": "q24",
+      "question": "There are eight of us and we'd like the place to ourselves. Can you do a Sunday?",
+      "category": "multi_fact",
+      "expected_doc_ids": ["groups_and_events", "opening_hours"],
+      "expected_behavior": "answer",
+      "expected_answer": "Eight meets the minimum of 8 for private hire, but a Sunday booking must fit inside Sunday opening hours of 10:00 to 17:00, and private hire needs three weeks' notice."
+    },
+    {
+      "id": "q25",
+      "question": "Do you offer laser hair removal?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null
+    },
+    {
+      "id": "q26",
+      "question": "Will my health insurance reimburse the massage?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null
+    },
+    {
+      "id": "q27",
+      "question": "Do you have a branch in Bordeaux?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null
+    },
+    {
+      "id": "q28",
+      "question": "Can you invoice my employer directly?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null
+    },
+    {
+      "id": "q29",
+      "question": "My lower back has been hurting for three weeks. What's causing it?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null
+    },
+    {
+      "id": "q30",
+      "question": "Do you sell the oils you use in the treatments?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null
+    }
+  ]
+}
