@@ -8,7 +8,10 @@
 The expansion was made because the benchmark had saturated: `dense`
 scored 100% hit@3 across all 30 questions, so no configuration could be
 distinguished from any other. The cause was confusability, not corpus
-size — every question mapped to a semantically unique document.
+size — every question mapped to a semantically unique document. The
+episode is written up in
+[`saturation-and-expansion.md`](saturation-and-expansion.md), with the
+original saturated tables.
 
 This document records what the expansion did to the **original thirty
 questions**, which are the ones that could silently break.
@@ -132,9 +135,11 @@ every configuration that cannot find it.
    number. Then q03 should be reworded — which you have ruled out for
    the original thirty — or dropped from scoring.
 
-I have left it as reading 1, unchanged, because changing it is your
-decision and because dropping it would hide the most interesting failure
-in the set. Flagging rather than fixing.
+**Decided: reading 1.** q03 stays exactly as annotated — not
+disambiguated, not dropped. A retrieval miss across all three
+configurations is an honest result and belongs in the README as a
+failure mode retrieval cannot fix. A sibling question was added beside
+it rather than altering it; see §8.
 
 ---
 
@@ -246,88 +251,23 @@ customer's home.
 
 ---
 
-## 6. Lexical overlap — measured, because it was a real confound
+## 6. Lexical overlap — measured separately
 
-The new questions were written **while reading their source documents**.
-That imports the document's vocabulary: exact treatment names, exact
-phrasing. Verbatim lexical match is exactly what sparse retrieval
-catches and dense retrieval misses, so questions written that way
-structurally favour the hybrid configurations — in the same direction as
-the result this benchmark expects to find. A confound pointing the same
-way as the expected conclusion is the worst kind.
+The added questions were written while reading their source documents,
+which imports that vocabulary and structurally favours sparse retrieval
+— a confound pointing in the same direction as this benchmark's expected
+conclusion.
 
-Measured by `python src/lexical_overlap.py`: the share of each
-question's content words appearing verbatim in its expected document.
-`out_of_scope` questions have no expected document and are excluded.
+It was measured, found real, and partly corrected: a genuine **+24 point
+confound in `multi_fact`**, removed by rewriting six questions in
+customer voice, leaving **+1.7 points** once standardised for category
+mix. `exact_term` showed no bias at all (88% against 88%) and was
+deliberately left alone.
 
-**First measurement, before any rewriting:**
-
-| Group | n | mean | median | p25 | p75 |
-|---|---|---|---|---|---|
-| original (q01–q30) | 24 | 64% | 67% | 43% | 96% |
-| added (q31–q65) | 32 | **79%** | 80% | 72% | 100% |
-
-Raw gap: **+15.0 points**. But the gap is not uniform, and the breakdown
-changes what to do about it:
-
-| Category | original | added |
-|---|---|---|
-| `exact_term` | 88% | **89%** |
-| `semantic` | 39% (med 42%) | 48% (med 43%) |
-| `multi_fact` | 59% | **83%** |
-
-Two separate effects were stacked on top of each other:
-
-1. **Category mix.** 59% of the added questions are `exact_term` against
-   42% of the originals. That category legitimately carries high overlap
-   — naming a treatment is what an `exact_term` question *is* — so
-   adding more of them raises the aggregate without any question being
-   badly written.
-2. **A genuine confound in `multi_fact`**: +24 points. That one was real
-   and was mine.
-
-**Action taken.** The six added `multi_fact` questions were rewritten in
-customer voice — the treatment described rather than named:
-
-| Q | Before | After |
-|---|---|---|
-| q57 | "What does the 60-minute Swedish Classic Massage come to on a Sunday?" | "How much would the classic full-body massage, an hour of it, cost me on a Sunday all in?" |
-| q58 | "I'm on the Radiance membership. Can I use my monthly treatment on the Clay Cocoon Ritual?" | "I pay for the dearer of the two monthly plans. Does that cover the clay wrap ritual?" |
-| q59 | "We booked the whole spa privately and need to cancel a week before. What do we lose?" | "We hired the whole place for a party and now have to call it off with a week to go. What do we lose?" |
-| q60 | "Does the evening supplement apply to the Express Chair Massage, and how much is it?" | "Is there a surcharge on the quick seated massage if I come in late afternoon or evening, and how much?" |
-| q61 | "I have the Serenity membership. Can my monthly treatment be the Herbal Poultice Massage?" | "I'm on the cheaper monthly plan. Could this month's treatment be the one with the steamed herb bundles?" |
-| q62 | "Can my guide dog stay with me during the Mineral Mud Wrap?" | "I'm blind and travel with a dog. Can she stay in the room while I have the mud treatment?" |
-
-`expected_doc_ids` and `expected_answer` were not touched. Only phrasing.
-
-**`exact_term` was deliberately left alone.** At 88% against the
-originals' 88% it shows no bias at all, and rewriting it would have made
-the added `exact_term` questions *easier* for dense retrieval than their
-original counterparts — introducing the opposite confound to fix a
-problem that was not there.
-
-**Second measurement, after the rewrite:**
-
-| Category | original | added |
-|---|---|---|
-| `exact_term` | 88% | 88% |
-| `semantic` | 39% (med 42%) | 48% (med 43%) |
-| `multi_fact` | 59% | **53%** |
-
-| | Raw gap | Standardised to the original category mix |
-|---|---|---|
-| before rewrite | +15.0 pts | — |
-| after rewrite | +8.9 pts | **+1.7 pts** |
-
-Standardising both groups to the original set's category mix (42%
-`exact_term`, 33% `semantic`, 25% `multi_fact`) leaves a residual of
-**+1.7 points**: 64.1% against 65.7%. The remaining raw gap of +8.9 is
-composition, not phrasing.
-
-The confound is not fully zero and should not be described as such. It
-is small enough that it cannot account for a difference between
-retrieval configurations, and the number is in the repository rather
-than asserted — rerun `src/lexical_overlap.py` to check it.
+**Full hypothesis, method, figures and conclusion:
+[`testset-bias-check.md`](testset-bias-check.md).** Not repeated here —
+two copies of a measurement diverge, and the stale one is always the one
+being read.
 
 ---
 
@@ -341,7 +281,9 @@ than asserted — rerun `src/lexical_overlap.py` to check it.
 - The **judge** was measured at 98.9% self-agreement (89/90 verdicts
   reproduced on replay) before the expansion. That figure is from the
   saturated corpus and does not necessarily carry over; it is re-measured
-  against the expanded corpus by `src/judge_stability.py`.
+  against the expanded corpus by `src/judge_stability.py`. Full analysis,
+  including the one flip and what it exposes about the judge's design:
+  [`judge-reliability.md`](judge-reliability.md).
 
 ## 8. q03 — decided
 

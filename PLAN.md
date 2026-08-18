@@ -102,7 +102,7 @@ phase 3 rather than trusted from four questions:
 
 ## Phase 3 — Harness
 
-**Status: code complete, not yet run. Blocked on an API key.**
+**Status: done.** Run 2026-08-18-2, all three configurations, 66 questions. Results in `RESULTS.md`.
 
 Python, not n8n — this needs repeatability and metrics.
 

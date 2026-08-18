@@ -54,10 +54,19 @@ def git_commit() -> str:
             ["git", "rev-parse", "HEAD"],
             capture_output=True, text=True, check=True,
         ).stdout.strip()
-        dirty = subprocess.run(
+        status = subprocess.run(
             ["git", "status", "--porcelain"],
             capture_output=True, text=True, check=True,
-        ).stdout.strip()
+        ).stdout.splitlines()
+        # A run writes its own artefacts into reports/, which are
+        # untracked at the moment the next configuration reads the
+        # status. Counting those marked every run after the first as
+        # dirty - the harness reporting itself as uncommitted work.
+        # Only changes that could alter a result count here.
+        dirty = [
+            line for line in status
+            if not (line.startswith("?? ") and line[3:].startswith("reports/"))
+        ]
         return f"{sha}-dirty" if dirty else sha
     except (subprocess.CalledProcessError, FileNotFoundError):
         return "unknown"

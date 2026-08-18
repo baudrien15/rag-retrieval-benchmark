@@ -1,0 +1,834 @@
+{
+  "run_id": "2026-08-18T084052Z",
+  "timestamp": "2026-08-18T08:46:49.750745+00:00",
+  "git_commit": "3210c15333d0dc3f0d998f7db955540fdf9172eb-dirty",
+  "retrieval_config": "hybrid_rerank",
+  "models": {
+    "generation": "claude-haiku-4-5-20251001",
+    "judge": "claude-opus-5",
+    "embedding": "BAAI/bge-m3",
+    "reranker": "BAAI/bge-reranker-v2-m3"
+  },
+  "generation_params": {
+    "model": "claude-haiku-4-5-20251001",
+    "max_tokens": 512,
+    "temperature": 0
+  },
+  "judge_params": {
+    "model": "claude-opus-5",
+    "max_tokens": 1024,
+    "thinking": {
+      "type": "disabled"
+    },
+    "output_config": {
+      "effort": "low",
+      "format": {
+        "type": "json_schema",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "correct": {
+              "type": "boolean",
+              "description": "True if the assistant's answer is correct."
+            },
+            "escalated": {
+              "type": "boolean",
+              "description": "True if the assistant declined to answer and referred the customer onwards, rather than supplying an answer."
+            },
+            "reason": {
+              "type": "string",
+              "description": "One sentence explaining the verdict."
+            }
+          },
+          "required": [
+            "correct",
+            "escalated",
+            "reason"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  },
+  "retrieval": {
+    "collection": "lumen_spa",
+    "top_k": 3,
+    "candidate_k": 20,
+    "score_threshold": null
+  },
+  "metrics": {
+    "overall": {
+      "hit_at_3": 1.0,
+      "answer_correct": 0.9333333333333333,
+      "fabrication_rate": 0.0
+    },
+    "per_category": {
+      "exact_term": {
+        "n": 10,
+        "answer_correct": 0.9,
+        "hit_at_3": 1.0
+      },
+      "semantic": {
+        "n": 8,
+        "answer_correct": 1.0,
+        "hit_at_3": 1.0
+      },
+      "multi_fact": {
+        "n": 6,
+        "answer_correct": 0.8333333333333334,
+        "hit_at_3": 1.0
+      },
+      "out_of_scope": {
+        "n": 6,
+        "answer_correct": 1.0,
+        "fabrication_rate": 0.0
+      }
+    }
+  },
+  "questions": [
+    {
+      "id": "q01",
+      "category": "exact_term",
+      "question": "How much is the hot stone massage?",
+      "expected_doc_ids": [
+        "pricing_massage"
+      ],
+      "expected_answer": "The Hot Stone Massage is 95 EUR for 75 minutes.",
+      "retrieved_doc_ids": [
+        "pricing_massage",
+        "treatments_massage",
+        "memberships"
+      ],
+      "retrieval_scores": [
+        0.8791635036468506,
+        -4.0545973777771,
+        -6.073834419250488
+      ],
+      "hit": true,
+      "answer": "Hot Stone Massage is €95 for 75 minutes.\n\nThis includes access to the sauna, hammam and relaxation lounge on the day of your treatment. A €15 supplement applies if booked after 19:00 on a weekday or at any time on Sunday.",
+      "correct": false,
+      "escalated": false,
+      "judge_reason": "The price and duration match, but the assistant fabricated unsupported details about spa access and a €15 late/Sunday supplement.",
+      "judge_refused": false
+    },
+    {
+      "id": "q02",
+      "category": "exact_term",
+      "question": "How long does the Lumen Signature Journey take?",
+      "expected_doc_ids": [
+        "treatments_signature"
+      ],
+      "expected_answer": "Allow three hours and fifteen minutes from arrival to departure, of which two hours and forty minutes is treatment time.",
+      "retrieved_doc_ids": [
+        "treatments_signature",
+        "pricing_body_rituals",
+        "treatments_body"
+      ],
+      "retrieval_scores": [
+        3.9572181701660156,
+        1.407168984413147,
+        -0.5596169829368591
+      ],
+      "hit": true,
+      "answer": "Three hours and fifteen minutes from arrival to departure. Two hours and forty minutes of that is treatment time; the rest is the rest period between steps and time to change.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "The assistant matches the reference figures exactly.",
+      "judge_refused": false
+    },
+    {
+      "id": "q03",
+      "category": "exact_term",
+      "question": "How many hours ahead do I need to cancel?",
+      "expected_doc_ids": [
+        "cancellation_policy"
+      ],
+      "expected_answer": "At least 24 hours before the appointment. Cancelling less than 24 hours ahead is charged at 50% of the treatment price.",
+      "retrieved_doc_ids": [
+        "cancellation_policy",
+        "booking_and_payment",
+        "treatments_body"
+      ],
+      "retrieval_scores": [
+        2.699765682220459,
+        -2.751408338546753,
+        -3.281524181365967
+      ],
+      "hit": true,
+      "answer": "You need to cancel at least 24 hours before your appointment.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "The assistant gives the correct 24-hour notice figure that the question asked for; the fee detail was not directly requested.",
+      "judge_refused": false
+    },
+    {
+      "id": "q04",
+      "category": "exact_term",
+      "question": "What does the seaweed wrap cost?",
+      "expected_doc_ids": [
+        "pricing_body_rituals"
+      ],
+      "expected_answer": "The Seaweed Wrap is 80 EUR for 60 minutes.",
+      "retrieved_doc_ids": [
+        "pricing_body_rituals",
+        "treatments_body",
+        "pricing_facials"
+      ],
+      "retrieval_scores": [
+        1.2349787950515747,
+        -4.058218002319336,
+        -8.354484558105469
+      ],
+      "hit": true,
+      "answer": "The Seaweed Wrap costs €80 and lasts 60 minutes.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "Matches the reference price and duration.",
+      "judge_refused": false
+    },
+    {
+      "id": "q05",
+      "category": "exact_term",
+      "question": "How long is a gift card valid?",
+      "expected_doc_ids": [
+        "gift_cards"
+      ],
+      "expected_answer": "12 months from the date of purchase. An expired card cannot be extended and has no remaining value.",
+      "retrieved_doc_ids": [
+        "gift_cards",
+        "booking_and_payment",
+        "memberships"
+      ],
+      "retrieval_scores": [
+        5.668290138244629,
+        -5.977756023406982,
+        -8.76162338256836
+      ],
+      "hit": true,
+      "answer": "A gift card is valid for 12 months from the date of purchase. The date is printed on the card. We cannot extend a card after it has expired, and an expired card has no remaining value.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "Matches the reference: 12 months validity, no extension, no remaining value.",
+      "judge_refused": false
+    },
+    {
+      "id": "q06",
+      "category": "exact_term",
+      "question": "How much is the monthly Serenity membership?",
+      "expected_doc_ids": [
+        "memberships"
+      ],
+      "expected_answer": "79 EUR per month.",
+      "retrieved_doc_ids": [
+        "memberships",
+        "facilities",
+        "pricing_body_rituals"
+      ],
+      "retrieval_scores": [
+        4.173271179199219,
+        -5.8372802734375,
+        -9.150090217590332
+      ],
+      "hit": true,
+      "answer": "€79 per month.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "The assistant's figure of €79 per month matches the reference.",
+      "judge_refused": false
+    },
+    {
+      "id": "q07",
+      "category": "exact_term",
+      "question": "What time do you open on Sunday?",
+      "expected_doc_ids": [
+        "opening_hours"
+      ],
+      "expected_answer": "10:00 on Sunday, closing at 17:00.",
+      "retrieved_doc_ids": [
+        "opening_hours",
+        "pricing_body_rituals",
+        "pricing_facials"
+      ],
+      "retrieval_scores": [
+        2.8102333545684814,
+        -2.3078346252441406,
+        -2.565196990966797
+      ],
+      "hit": true,
+      "answer": "We open at 10:00 on Sunday.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "The assistant correctly states the Sunday opening time of 10:00, which is what was asked.",
+      "judge_refused": false
+    },
+    {
+      "id": "q08",
+      "category": "exact_term",
+      "question": "What's the minimum group size for a private booking?",
+      "expected_doc_ids": [
+        "groups_and_events"
+      ],
+      "expected_answer": "8 people.",
+      "retrieved_doc_ids": [
+        "groups_and_events",
+        "house_rules",
+        "memberships"
+      ],
+      "retrieval_scores": [
+        5.321557998657227,
+        -5.728963851928711,
+        -7.542050361633301
+      ],
+      "hit": true,
+      "answer": "The minimum group size for a private booking is 8 people.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "Matches the reference figure of 8 people.",
+      "judge_refused": false
+    },
+    {
+      "id": "q09",
+      "category": "exact_term",
+      "question": "How much deposit is taken when I book?",
+      "expected_doc_ids": [
+        "booking_and_payment"
+      ],
+      "expected_answer": "30 EUR per treatment, taken when the booking is confirmed and deducted from the final price on the day.",
+      "retrieved_doc_ids": [
+        "booking_and_payment",
+        "gift_cards",
+        "groups_and_events"
+      ],
+      "retrieval_scores": [
+        3.1914703845977783,
+        -1.4346065521240234,
+        -4.797253131866455
+      ],
+      "hit": true,
+      "answer": "A deposit of €30 per treatment is taken when the booking is confirmed.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "The assistant states the correct €30 per treatment deposit taken at booking confirmation, matching the reference.",
+      "judge_refused": false
+    },
+    {
+      "id": "q10",
+      "category": "exact_term",
+      "question": "What does the Hydraglow facial cost?",
+      "expected_doc_ids": [
+        "pricing_facials"
+      ],
+      "expected_answer": "The Hydraglow Facial is 90 EUR for 60 minutes.",
+      "retrieved_doc_ids": [
+        "pricing_facials",
+        "treatments_facials",
+        "treatments_signature"
+      ],
+      "retrieval_scores": [
+        2.4834189414978027,
+        -1.6654727458953857,
+        -2.9062693119049072
+      ],
+      "hit": true,
+      "answer": "The Hydraglow Facial costs €90 for 60 minutes. This includes access to the sauna, hammam and relaxation lounge on the day of your treatment.\n\nIf you book a course of six Hydraglow Facials, the price is €450 (five times the single-treatment price), and the course must be used within twelve months of the first appointment.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "The price and duration match the reference; additional details don't contradict it.",
+      "judge_refused": false
+    },
+    {
+      "id": "q11",
+      "category": "semantic",
+      "question": "I've been training hard and my legs are wrecked. What would you suggest?",
+      "expected_doc_ids": [
+        "treatments_massage"
+      ],
+      "expected_answer": "The Deep Tissue Massage: firm, slow pressure into the deeper muscle layers, suited to recovery after repeated physical effort or heavy training.",
+      "retrieved_doc_ids": [
+        "treatments_massage",
+        "treatments_body",
+        "contraindications"
+      ],
+      "retrieval_scores": [
+        -3.7169294357299805,
+        -7.106619834899902,
+        -7.6859331130981445
+      ],
+      "hit": true,
+      "answer": "Based on your description, **Deep Tissue Massage** would be suited to you. It uses firm, slow pressure working into deeper muscle layers and is specifically recommended for recovery after repeated physical effort or heavy training.\n\nNote that some tenderness for a day afterwards is normal with this treatment, and you can tell your therapist if the pressure is too strong at any point.\n\nFor pricing and to book, please contact reception.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "The assistant recommended Deep Tissue Massage with matching description, consistent with the reference.",
+      "judge_refused": false
+    },
+    {
+      "id": "q12",
+      "category": "semantic",
+      "question": "Can I bring my children?",
+      "expected_doc_ids": [
+        "house_rules"
+      ],
+      "expected_answer": "No. The minimum age is 16, and under-16s are not admitted even accompanied or in the reception area.",
+      "retrieved_doc_ids": [
+        "house_rules",
+        "first_visit",
+        "contraindications"
+      ],
+      "retrieval_scores": [
+        -2.6352391242980957,
+        -6.092129707336426,
+        -6.972767353057861
+      ],
+      "hit": true,
+      "answer": "No. The minimum age is 16. We do not admit anyone under 16, including in the reception area, even if accompanied by an adult. There is no children's treatment list and no family session.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "Matches the reference: minimum age 16, no under-16s admitted even accompanied or in reception.",
+      "judge_refused": false
+    },
+    {
+      "id": "q13",
+      "category": "semantic",
+      "question": "What happens if I turn up late?",
+      "expected_doc_ids": [
+        "cancellation_policy"
+      ],
+      "expected_answer": "The treatment still ends at its scheduled end time and the full price is charged. More than 20 minutes late is treated as a no-show.",
+      "retrieved_doc_ids": [
+        "first_visit",
+        "cancellation_policy",
+        "groups_and_events"
+      ],
+      "retrieval_scores": [
+        -1.5887563228607178,
+        -1.7792415618896484,
+        -7.544932842254639
+      ],
+      "hit": true,
+      "answer": "Your treatment ends at the time it was scheduled to end, whatever time you arrive. A therapist's day is booked back to back, so lost minutes cannot be added on. The full price is charged for a shortened treatment.\n\nIf you are more than 20 minutes late, the appointment is treated as a no-show and the full price is charged. We will always try to fit you in later the same day instead, but we cannot promise it.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "The assistant states the treatment ends on schedule with full price charged and that over 20 minutes late counts as a no-show, matching the reference.",
+      "judge_refused": false
+    },
+    {
+      "id": "q14",
+      "category": "semantic",
+      "question": "Is there anywhere to unwind before my treatment?",
+      "expected_doc_ids": [
+        "facilities"
+      ],
+      "expected_answer": "The relaxation lounge: twelve reclining chairs, low light, no phones, with herbal tea, water and fruit served through the day. Arriving early to sit there is encouraged.",
+      "retrieved_doc_ids": [
+        "facilities",
+        "first_visit",
+        "house_rules"
+      ],
+      "retrieval_scores": [
+        -1.6301391124725342,
+        -2.2989680767059326,
+        -5.509634971618652
+      ],
+      "hit": true,
+      "answer": "Yes. The relaxation lounge has twelve reclining chairs, low light, herbal tea, water and fresh fruit. It's a silent room where you can sit before your appointment. Arriving early to use it before your treatment is encouraged.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "The assistant matches the reference on the lounge's twelve chairs, low lighting, refreshments, quiet/no-phone policy, and encouragement to arrive early.",
+      "judge_refused": false
+    },
+    {
+      "id": "q15",
+      "category": "semantic",
+      "question": "I've never been to a spa before. What should I know?",
+      "expected_doc_ids": [
+        "first_visit"
+      ],
+      "expected_answer": "Arrive 15 minutes early, bring swimwear if you want the sauna or hammam, leave jewellery at home, and complete a short health form on arrival. Robes, slippers and towels are provided.",
+      "retrieved_doc_ids": [
+        "first_visit",
+        "contraindications",
+        "groups_and_events"
+      ],
+      "retrieval_scores": [
+        3.1070895195007324,
+        -4.7540059089660645,
+        -4.985796928405762
+      ],
+      "hit": true,
+      "answer": "Here are the key things for your first visit:\n\n**Arrive 15 minutes early** to change, complete a health form, and settle in — arriving rushed undoes part of the treatment.\n\n**Bring swimwear** if you'll use the sauna or hammam. Robes, slippers and towels are provided, so that's all you need.\n\n**Leave jewellery at home** — use the lockers, but it's simplest not to bring anything you'd mind losing.\n\n**For a massage**, you undress to your underwear. You're covered by a towel throughout and only the area being worked on is uncovered.\n\n**For a facial**, you stay dressed from the waist down.\n\n**You don't have to talk.** Tell your therapist at the start if you prefer silence.\n\n**Afterwards**, drink water and rest for half an hour in the relaxation lounge before doing anything demanding.\n\nYou'll complete a short health form on arrival — this helps us make sure the treatment is right for you.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "The assistant covers all reference points (15 minutes early, swimwear, no jewellery, health form, provided robes/slippers/towels) with consistent extra detail.",
+      "judge_refused": false
+    },
+    {
+      "id": "q16",
+      "category": "semantic",
+      "question": "How do I get to you without a car?",
+      "expected_doc_ids": [
+        "location_and_access"
+      ],
+      "expected_answer": "Tram line 1 to the Tanneurs stop, then four minutes on foot. Bus route 26 stops at Pont Sauvetout, six minutes away. Bicycle racks are inside the archway.",
+      "retrieved_doc_ids": [
+        "location_and_access",
+        "first_visit",
+        "gift_cards"
+      ],
+      "retrieval_scores": [
+        -5.5527825355529785,
+        -7.181009769439697,
+        -8.461626052856445
+      ],
+      "hit": true,
+      "answer": "**By tram:** Line 1 to the Tanneurs stop, then four minutes on foot along the quay heading north. This is the simplest way.\n\n**By bus:** Route 26 stops at Pont Sauvetout, six minutes away on foot.\n\n**By bicycle:** Racks are fixed to the wall inside the archway, within sight of reception. A shared-bike station sits at the far end of the quay, about 100 metres away.\n\nThe entrance is set back from the quay, under the stone archway between the bookshop and the flower stall.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "The assistant matches the reference on tram line 1/Tanneurs/four minutes, bus 26/Pont Sauvetout/six minutes, and bike racks in the archway.",
+      "judge_refused": false
+    },
+    {
+      "id": "q17",
+      "category": "semantic",
+      "question": "My skin looks dull. Is there anything that would help?",
+      "expected_doc_ids": [
+        "treatments_facials"
+      ],
+      "expected_answer": "The Hydraglow Facial, our hydration facial, aimed at skin that looks tired, flat or lacking radiance.",
+      "retrieved_doc_ids": [
+        "treatments_body",
+        "treatments_facials",
+        "pricing_facials"
+      ],
+      "retrieval_scores": [
+        -1.0890804529190063,
+        -1.7342891693115234,
+        -6.168376922607422
+      ],
+      "hit": true,
+      "answer": "Yes. The **Hydraglow Facial** is designed for skin that looks tired, flat or lacking radiance. It's a gentle treatment using an enzyme cleanse, hyaluronic serum, and a cooling gel mask. The effect is immediate with no visible reaction afterwards.\n\nIt costs €90 for 60 minutes, and the price includes access to the sauna, hammam and relaxation lounge on the day of your treatment.\n\nOur therapists also carry out a skin assessment at the start of every facial appointment and can recommend a different treatment if another would suit you better.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "The assistant correctly recommends the Hydraglow Facial for dull skin, matching the reference substance.",
+      "judge_refused": false
+    },
+    {
+      "id": "q18",
+      "category": "semantic",
+      "question": "I'd like to give this to someone as a present.",
+      "expected_doc_ids": [
+        "gift_cards"
+      ],
+      "expected_answer": "A gift card, sold in fixed amounts of 50, 100 and 200 EUR or for a named treatment. It is valid 12 months and is transferable.",
+      "retrieved_doc_ids": [
+        "gift_cards",
+        "booking_and_payment",
+        "treatments_body"
+      ],
+      "retrieval_scores": [
+        -2.114704132080078,
+        -6.883844375610352,
+        -7.185734272003174
+      ],
+      "hit": true,
+      "answer": "A gift card is the usual way to give a treatment to someone else without booking it for them — they choose the treatment and the date themselves.\n\nGift cards are sold in fixed amounts of €50, €100 and €200. You can also buy a card for a named treatment, in which case it remains valid for that treatment even if the price rises during the twelve months.\n\nA gift card is valid for 12 months from the date of purchase.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "The assistant states the correct amounts, named-treatment option, and 12-month validity, matching the reference.",
+      "judge_refused": false
+    },
+    {
+      "id": "q19",
+      "category": "multi_fact",
+      "question": "I'm pregnant. Which massage can I book?",
+      "expected_doc_ids": [
+        "contraindications",
+        "treatments_massage"
+      ],
+      "expected_answer": "The Prenatal Massage, available from the second trimester, performed side-lying with bolster support and unscented oil. Hot stone treatment and full-body wraps are excluded during pregnancy.",
+      "retrieved_doc_ids": [
+        "treatments_massage",
+        "treatments_signature",
+        "contraindications"
+      ],
+      "retrieval_scores": [
+        1.7305223941802979,
+        0.9478871822357178,
+        0.8537667989730835
+      ],
+      "hit": true,
+      "answer": "The Prenatal Massage, available from the second trimester onwards. It's performed in a side-lying position with bolster support, using unscented oil, with light pressure throughout. The abdomen and lower back are avoided.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "The assistant correctly identifies the Prenatal Massage from the second trimester with side-lying bolster support and unscented oil, matching the reference substance.",
+      "judge_refused": false
+    },
+    {
+      "id": "q20",
+      "category": "multi_fact",
+      "question": "How much is the Signature Journey and how long should I set aside?",
+      "expected_doc_ids": [
+        "pricing_body_rituals",
+        "treatments_signature"
+      ],
+      "expected_answer": "240 EUR per person, and allow three hours and fifteen minutes.",
+      "retrieved_doc_ids": [
+        "treatments_signature",
+        "pricing_body_rituals",
+        "treatments_body"
+      ],
+      "retrieval_scores": [
+        0.9140368103981018,
+        0.5673128962516785,
+        -1.8460578918457031
+      ],
+      "hit": true,
+      "answer": "The Lumen Signature Journey is €240 per person. Allow three hours and fifteen minutes from arrival to departure.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "Matches the reference price and duration exactly.",
+      "judge_refused": false
+    },
+    {
+      "id": "q21",
+      "category": "multi_fact",
+      "question": "I'm on the Serenity membership. If I cancel a session at short notice, am I still charged?",
+      "expected_doc_ids": [
+        "memberships",
+        "cancellation_policy"
+      ],
+      "expected_answer": "Yes. The session counts as used for that month, and the standard late-cancellation charge of 50% of the treatment price applies on top.",
+      "retrieved_doc_ids": [
+        "memberships",
+        "cancellation_policy",
+        "booking_and_payment"
+      ],
+      "retrieval_scores": [
+        2.813105821609497,
+        -3.007314443588257,
+        -5.047250747680664
+      ],
+      "hit": true,
+      "answer": "Yes. A session cancelled at short notice counts as used for that month, and the standard cancellation charge applies on top. The standard cancellation charge is 50% of the treatment price.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "The assistant matches the reference, including the 50% late-cancellation charge and the session counting as used.",
+      "judge_refused": false
+    },
+    {
+      "id": "q22",
+      "category": "multi_fact",
+      "question": "How much is the deposit, and can I cover it with a gift card?",
+      "expected_doc_ids": [
+        "gift_cards",
+        "booking_and_payment"
+      ],
+      "expected_answer": "No. The 30 EUR deposit must be paid by card or in cash. The gift card can then be applied against the balance on the day.",
+      "retrieved_doc_ids": [
+        "gift_cards",
+        "booking_and_payment",
+        "memberships"
+      ],
+      "retrieval_scores": [
+        1.4681942462921143,
+        0.7652945518493652,
+        -8.988277435302734
+      ],
+      "hit": true,
+      "answer": "The deposit is €30 per treatment.\n\nNo, you cannot cover it with a gift card. The deposit must be paid by card or in cash at the moment of booking. The gift card is applied against the balance on the day of your treatment.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "Matches the reference: €30 deposit, card or cash only, gift card applied to balance on the day.",
+      "judge_refused": false
+    },
+    {
+      "id": "q23",
+      "category": "multi_fact",
+      "question": "I had surgery six weeks ago. Can I use the sauna?",
+      "expected_doc_ids": [
+        "contraindications",
+        "facilities"
+      ],
+      "expected_answer": "No. The sauna is one of the two heat facilities, and heat should be avoided for eight weeks after surgery, so six weeks is too soon.",
+      "retrieved_doc_ids": [
+        "contraindications",
+        "first_visit",
+        "facilities"
+      ],
+      "retrieval_scores": [
+        -2.38852858543396,
+        -3.917951822280884,
+        -4.443517208099365
+      ],
+      "hit": true,
+      "answer": "No. You need to wait eight weeks after surgery before using heat facilities like the sauna. You had surgery six weeks ago, so you should wait another two weeks.",
+      "correct": true,
+      "escalated": false,
+      "judge_reason": "The assistant correctly states the eight-week post-surgery restriction on heat facilities and that six weeks is too soon.",
+      "judge_refused": false
+    },
+    {
+      "id": "q24",
+      "category": "multi_fact",
+      "question": "There are eight of us and we'd like the place to ourselves. Can you do a Sunday?",
+      "expected_doc_ids": [
+        "groups_and_events",
+        "opening_hours"
+      ],
+      "expected_answer": "Eight meets the minimum of 8 for private hire, but a Sunday booking must fit inside Sunday opening hours of 10:00 to 17:00, and private hire needs three weeks' notice.",
+      "retrieved_doc_ids": [
+        "opening_hours",
+        "pricing_body_rituals",
+        "pricing_massage"
+      ],
+      "retrieval_scores": [
+        -5.0142059326171875,
+        -6.687143802642822,
+        -6.70114803314209
+      ],
+      "hit": true,
+      "answer": "I don't have information about private bookings or group exclusivity in the documents available to me. Please contact reception to discuss this request.",
+      "correct": false,
+      "escalated": true,
+      "judge_reason": "The reference covers private hire terms (minimum 8, Sunday hours 10:00–17:00, three weeks' notice) but the assistant declined to answer.",
+      "judge_refused": false
+    },
+    {
+      "id": "q25",
+      "category": "out_of_scope",
+      "question": "Do you offer laser hair removal?",
+      "expected_doc_ids": [],
+      "expected_answer": null,
+      "retrieved_doc_ids": [
+        "treatments_facials",
+        "booking_and_payment",
+        "facilities"
+      ],
+      "retrieval_scores": [
+        -6.730025291442871,
+        -7.052951812744141,
+        -7.494845390319824
+      ],
+      "hit": false,
+      "answer": "The reference documents I have don't cover laser hair removal. Please contact reception to ask about this service.",
+      "correct": true,
+      "escalated": true,
+      "judge_reason": "The assistant declined and referred the customer to reception, as required for an uncovered question.",
+      "judge_refused": false
+    },
+    {
+      "id": "q26",
+      "category": "out_of_scope",
+      "question": "Will my health insurance reimburse the massage?",
+      "expected_doc_ids": [],
+      "expected_answer": null,
+      "retrieved_doc_ids": [
+        "first_visit",
+        "memberships",
+        "treatments_body"
+      ],
+      "retrieval_scores": [
+        -6.788592338562012,
+        -6.995035171508789,
+        -7.3800048828125
+      ],
+      "hit": false,
+      "answer": "The documents don't contain information about health insurance reimbursement. Please contact reception to discuss this.",
+      "correct": true,
+      "escalated": true,
+      "judge_reason": "The assistant correctly declined and referred the customer to reception, as the corpus does not cover insurance reimbursement.",
+      "judge_refused": false
+    },
+    {
+      "id": "q27",
+      "category": "out_of_scope",
+      "question": "Do you have a branch in Bordeaux?",
+      "expected_doc_ids": [],
+      "expected_answer": null,
+      "retrieved_doc_ids": [
+        "location_and_access",
+        "booking_and_payment",
+        "memberships"
+      ],
+      "retrieval_scores": [
+        -10.29733657836914,
+        -10.384086608886719,
+        -10.908504486083984
+      ],
+      "hit": false,
+      "answer": "The documents provided only cover Lumen Spa & Wellness at 18 Quai des Tanneurs in Nantes. I don't have information about other locations. Please contact reception to ask about branches elsewhere.",
+      "correct": true,
+      "escalated": true,
+      "judge_reason": "The assistant declined and referred the customer to reception, which is correct for an uncovered question.",
+      "judge_refused": false
+    },
+    {
+      "id": "q28",
+      "category": "out_of_scope",
+      "question": "Can you invoice my employer directly?",
+      "expected_doc_ids": [],
+      "expected_answer": null,
+      "retrieved_doc_ids": [
+        "memberships",
+        "booking_and_payment",
+        "gift_cards"
+      ],
+      "retrieval_scores": [
+        -10.713237762451172,
+        -10.90218734741211,
+        -10.937987327575684
+      ],
+      "hit": false,
+      "answer": "The documents don't cover invoicing or billing to a third party. Please contact reception to discuss this.",
+      "correct": true,
+      "escalated": true,
+      "judge_reason": "The assistant correctly declined and referred the customer to reception, as the corpus does not cover this.",
+      "judge_refused": false
+    },
+    {
+      "id": "q29",
+      "category": "out_of_scope",
+      "question": "My lower back has been hurting for three weeks. What's causing it?",
+      "expected_doc_ids": [],
+      "expected_answer": null,
+      "retrieved_doc_ids": [
+        "treatments_massage",
+        "treatments_signature",
+        "contraindications"
+      ],
+      "retrieval_scores": [
+        -3.1606273651123047,
+        -7.751132488250732,
+        -8.284177780151367
+      ],
+      "hit": false,
+      "answer": "I can't answer that — I'm not qualified to diagnose what's causing your pain. Please see your doctor.\n\nOnce you have medical guidance, I can tell you about our massage treatments. Our Deep Tissue Massage is suited to a stiff lower back, but you should check with your doctor first, especially given that the pain has persisted for three weeks.",
+      "correct": true,
+      "escalated": true,
+      "judge_reason": "The assistant declined to diagnose and referred the customer to a doctor, which is appropriate for an uncovered question.",
+      "judge_refused": false
+    },
+    {
+      "id": "q30",
+      "category": "out_of_scope",
+      "question": "Do you sell the oils you use in the treatments?",
+      "expected_doc_ids": [],
+      "expected_answer": null,
+      "retrieved_doc_ids": [
+        "house_rules",
+        "treatments_massage",
+        "treatments_body"
+      ],
+      "retrieval_scores": [
+        -2.9629926681518555,
+        -4.836579322814941,
+        -5.005127906799316
+      ],
+      "hit": false,
+      "answer": "The documents don't cover that. Please contact reception to ask about purchasing oils.",
+      "correct": true,
+      "escalated": true,
+      "judge_reason": "The assistant correctly declined and referred the customer to reception for an uncovered question.",
+      "judge_refused": false
+    }
+  ]
+}
