@@ -123,11 +123,11 @@ Two questions asking the same thing, one naming the booking type and one
 not. The pair separates *retrieval failed* from *the customer did not
 specify*. Both are annotated to `cancellation_policy` (24 hours).
 
-| | q03 "How many hours ahead do I need to cancel?" | q66 "…to cancel a single treatment?" |
-|---|---|---|
-| dense | miss (rank > 3) | hit@3 (rank 2), **correct** |
-| hybrid | miss (rank > 3) | **miss (rank > 3)** |
-| hybrid_rerank | **hit@1 (rank 1)** | hit@3 (rank 3), **correct** |
+| | q03 "How many hours ahead do I need to cancel?" | q66 "…to cancel a single treatment?" | Artefact |
+|---|---|---|---|
+| dense | miss (rank > 3) | hit@3 (rank 2), **correct** | `runs/2026-08-18T093939Z-dense.json` |
+| hybrid | miss (rank > 3) | **miss (rank > 3)** | `runs/2026-08-18T093939Z-hybrid.json` |
+| hybrid_rerank | **hit@1 (rank 1)** | hit@3 (rank 3), **correct** | `runs/2026-08-18T093939Z-hybrid_rerank.json` |
 
 **It did not come out as expected, in both directions.**
 
