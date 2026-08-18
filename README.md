@@ -170,8 +170,8 @@ would make this worse rather than better:
 
 ## How this repository checks itself
 
-Four self-checks, each producing a committed artefact rather than a
-claim. Three are scripts anyone can rerun; the fourth was done by hand
+Five self-checks, each producing a committed artefact rather than a
+claim. Four are scripts anyone can rerun; the other was done by hand
 because no script can do it.
 
 | Check | Question it answers | Result |
@@ -179,9 +179,13 @@ because no script can do it.
 | [`src/validate_testset.py`](src/validate_testset.py) | Does every `expected_doc_id` still resolve? Do the category counts hold? | passes: 62 documents, 66 questions |
 | [`src/judge_stability.py`](src/judge_stability.py) | Is the judge repeatable? | 98.5% on `correct`, 100% on `escalated` - [`docs/judge-reliability.md`](docs/judge-reliability.md) |
 | [`src/lexical_overlap.py`](src/lexical_overlap.py) | Were the newer questions phrased in a way that favours sparse retrieval? | a real **+24 point** confound found in `multi_fact` and removed; **+1.7 points** residual - [`docs/testset-bias-check.md`](docs/testset-bias-check.md) |
+| [`src/escalation_eval.py`](src/escalation_eval.py) | Does the serving-time escalation detector agree with the judge on configurations it was not written against? | 1 missed escalation of 37 rows, 0 wrong escalations of 155 - but the split is by configuration, not by question, so the genuinely unseen evidence is **3 of 4 answers** - [`docs/escalation-detector.md`](docs/escalation-detector.md) |
 | annotation review, by hand | Did expanding the corpus silently break an existing annotation? | one `out_of_scope` question was **nearly inverted** and caught - [`docs/annotation-review-expansion.md`](docs/annotation-review-expansion.md) |
 
-The fourth is the one worth dwelling on. Expanding the corpus from 18 to
+The detector's single failure is q66, the question already recorded as
+ambiguous before the detector was written.
+
+The annotation review is the one worth dwelling on. Expanding the corpus from 18 to
 62 documents introduced a sentence saying that a treatment's massage
 candle is not taken home. That answers "do you sell the oils you use?",
 an out-of-scope question whose correct behaviour is to escalate. An

@@ -1,0 +1,151 @@
+{
+  "run_id": "2026-08-18T155129Z-escalation-detector",
+  "timestamp": "2026-08-18T15:51:29.438646+00:00",
+  "git_commit": "00aeafc7c370340316eb38b9fce732519c5e74b0-dirty",
+  "what": "escalation detector agreement with the judge's `escalated` field",
+  "detector": "src/escalation.py::is_escalation (pure, no model call)",
+  "judge_model": "claude-opus-5",
+  "generation_model": "claude-haiku-4-5-20251001",
+  "split": {
+    "by": "retrieval configuration, not by question",
+    "questions_common_to_both_sets": 66,
+    "caveat": "Both sets cover the same 66 questions. Artefact-row counts overstate the evidence; the unseen_escalations block below is the only part the rule cannot have been fitted to."
+  },
+  "development": {
+    "artefacts": [
+      "2026-08-18T093939Z-dense.json",
+      "2026-08-18T083135Z-dense.json"
+    ],
+    "escalating_question_ids": [
+      "q03",
+      "q11",
+      "q17",
+      "q23",
+      "q25",
+      "q26",
+      "q27",
+      "q28",
+      "q29",
+      "q30",
+      "q58",
+      "q63",
+      "q64",
+      "q65"
+    ],
+    "answers": 96,
+    "distinct_questions": 66,
+    "judge_escalations": 21,
+    "judge_escalation_questions": 14,
+    "judge_answers": 75,
+    "judge_answer_questions": 55,
+    "missed_escalations": {
+      "count": 0,
+      "of": 21,
+      "rate": 0.0,
+      "cases": []
+    },
+    "wrong_escalations": {
+      "count": 0,
+      "of": 75,
+      "rate": 0.0,
+      "cases": []
+    }
+  },
+  "evaluation": {
+    "artefacts": [
+      "2026-08-18T093939Z-hybrid.json",
+      "2026-08-18T093939Z-hybrid_rerank.json",
+      "2026-08-18T083135Z-hybrid.json",
+      "2026-08-18T084052Z-hybrid_rerank.json"
+    ],
+    "escalating_question_ids": [
+      "q01",
+      "q23",
+      "q24",
+      "q25",
+      "q26",
+      "q27",
+      "q28",
+      "q29",
+      "q30",
+      "q58",
+      "q63",
+      "q64",
+      "q65",
+      "q66"
+    ],
+    "answers": 192,
+    "distinct_questions": 66,
+    "judge_escalations": 37,
+    "judge_escalation_questions": 14,
+    "judge_answers": 155,
+    "judge_answer_questions": 57,
+    "missed_escalations": {
+      "count": 1,
+      "of": 37,
+      "rate": 0.02702702702702703,
+      "cases": [
+        {
+          "artefact": "2026-08-18T093939Z-hybrid.json",
+          "config": "hybrid",
+          "id": "q66",
+          "category": "exact_term",
+          "detector": false,
+          "judge": true,
+          "answer": "The documents provided cover cancellation terms for treatment courses, group bookings, and spa day packages, but not for single individual treatments. Please contact reception for the cancellation terms that apply to your booking."
+        }
+      ]
+    },
+    "wrong_escalations": {
+      "count": 0,
+      "of": 155,
+      "rate": 0.0,
+      "cases": []
+    }
+  },
+  "unseen_escalations": {
+    "definition": "evaluation answers whose question never escalated in the development set",
+    "answers": 4,
+    "distinct_questions": 3,
+    "caught": 3,
+    "missed": 1,
+    "cases": [
+      {
+        "artefact": "2026-08-18T093939Z-hybrid.json",
+        "config": "hybrid",
+        "id": "q01",
+        "category": "exact_term",
+        "detector": true,
+        "judge": true,
+        "answer": "The documents I have cover the Himalayan Salt Stone Massage at €102 for 75 minutes. I don't have information about other hot stone massage treatments. If you're looking for a different hot stone massage, please contact reception."
+      },
+      {
+        "artefact": "2026-08-18T093939Z-hybrid.json",
+        "config": "hybrid",
+        "id": "q66",
+        "category": "exact_term",
+        "detector": false,
+        "judge": true,
+        "answer": "The documents provided cover cancellation terms for treatment courses, group bookings, and spa day packages, but not for single individual treatments. Please contact reception for the cancellation terms that apply to your booking."
+      },
+      {
+        "artefact": "2026-08-18T093939Z-hybrid_rerank.json",
+        "config": "hybrid_rerank",
+        "id": "q24",
+        "category": "multi_fact",
+        "detector": true,
+        "judge": true,
+        "answer": "I don't have information about private bookings or group exclusivity in the documents available to me. Please contact reception to discuss this request."
+      },
+      {
+        "artefact": "2026-08-18T084052Z-hybrid_rerank.json",
+        "config": "hybrid_rerank",
+        "id": "q24",
+        "category": "multi_fact",
+        "detector": true,
+        "judge": true,
+        "answer": "I don't have information about private bookings or group exclusivity in the documents available to me. Please contact reception to discuss this request."
+      }
+    ]
+  }
+}
