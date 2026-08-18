@@ -3,8 +3,9 @@
 Measuring how much retrieval strategy — not prompting — drives answer
 quality and hallucination rate in a support chatbot.
 
-> Status: work in progress. Numbers below are placeholders until the
-> first full run completes.
+> Status: phases 1-4 complete. Every number below comes from a committed
+> run artefact in [`reports/runs/`](reports/runs/), and every table row
+> in [`RESULTS.md`](RESULTS.md) cites the file it came from.
 
 ## Why
 
@@ -101,6 +102,12 @@ documents the answer needs.
 the ranking inverts under a second judging pass. `hybrid_rerank`'s lead
 is stable under both.
 
+> **The `answer correct` column understates every configuration.** The
+> judge never sees the corpus, so it cannot tell correct extra detail
+> from invented detail and penalises both. The direction of the bias is
+> known, its size is not, and **no number has been adjusted to
+> compensate**. See the section below.
+
 ### A failure retrieval cannot fix
 
 Two questions asking the same thing — "How many hours ahead do I need to
@@ -115,16 +122,116 @@ correctly, which is better than the reference answer, and the judge
 called the extra figures invented. For the best configuration on this
 question, the bottleneck was not retrieval. It was scoring.
 
+## An agreement rate measures reproducibility, not accuracy
+
+The most useful thing this project produced is not a comparison between
+retrieval methods. It is a demonstration of how a benchmark can report a
+confident number that is wrong in a way none of its own checks can see.
+
+The judge was measured at **98.5% self-agreement** - 195 of 198 verdicts
+reproduced exactly on replay. That number says the judge is
+*consistent*. It says nothing about whether it is *right*. **A judge
+that is consistently wrong scores 100%.**
+
+**The worked example, q03 under `hybrid_rerank`.** Everything upstream
+worked: the correct document was retrieved at **rank 1**. Asked "how
+many hours ahead do I need to cancel?", the assistant answered:
+
+> It depends on what you've booked: individual treatment 24 hours, spa
+> day package 72 hours, treatment course 48 hours.
+
+All three periods are correct and all three are in the corpus. Since the
+question names no booking type, this is **a better answer than the
+reference**, which gives only the 24-hour figure. The judge scored it
+wrong, for "inventing tiered notice periods not in the reference".
+
+It did not invent them. It correctly retrieved and reported them.
+
+**Both judging passes agreed on that verdict.** So it never surfaced as
+a flip, contributed nothing to the 1.5% disagreement rate, and is
+invisible to every reliability figure in this repository. The agreement
+rate reports perfect consistency here, and it was consistently wrong.
+
+**What it costs, stated plainly:** `answer_correct` understates every
+configuration; we cannot say by how much without hand-grading all 198
+answers; and nothing has been adjusted to compensate. A correction
+estimated from four observed cases would be a worse number than an
+honestly biased one, because it would look precise.
+
+Full analysis, including why showing the judge the retrieved documents
+would make this worse rather than better:
+[`docs/judge-reliability.md`](docs/judge-reliability.md).
+
+## How this repository checks itself
+
+Four self-checks, each producing a committed artefact rather than a
+claim. Three are scripts anyone can rerun; the fourth was done by hand
+because no script can do it.
+
+| Check | Question it answers | Result |
+|---|---|---|
+| [`src/validate_testset.py`](src/validate_testset.py) | Does every `expected_doc_id` still resolve? Do the category counts hold? | passes: 62 documents, 66 questions |
+| [`src/judge_stability.py`](src/judge_stability.py) | Is the judge repeatable? | 98.5% on `correct`, 100% on `escalated` - [`docs/judge-reliability.md`](docs/judge-reliability.md) |
+| [`src/lexical_overlap.py`](src/lexical_overlap.py) | Were the newer questions phrased in a way that favours sparse retrieval? | a real **+24 point** confound found in `multi_fact` and removed; **+1.7 points** residual - [`docs/testset-bias-check.md`](docs/testset-bias-check.md) |
+| annotation review, by hand | Did expanding the corpus silently break an existing annotation? | one `out_of_scope` question was **nearly inverted** and caught - [`docs/annotation-review-expansion.md`](docs/annotation-review-expansion.md) |
+
+The fourth is the one worth dwelling on. Expanding the corpus from 18 to
+62 documents introduced a sentence saying that a treatment's massage
+candle is not taken home. That answers "do you sell the oils you use?",
+an out-of-scope question whose correct behaviour is to escalate. An
+assistant retrieving it would have been **right, and scored as a
+fabrication**. No automated check could have caught it: a document that
+answers an out-of-scope question contains no forbidden term. It was
+found by reading 44 new documents against 30 existing questions.
+
 ## Confidence threshold
 
-_Pending._
+**There was nothing to threshold.** Fabrication rate is **0% across all
+three configurations** - 27 out-of-scope questions asked, not one
+answered instead of escalated. At this scale and on this corpus,
+fabrication is not the dominant failure mode. Retrieving the wrong
+member of a confusable cluster is, and a confidence threshold does not
+help with that, because those answers come back with *high* scores.
+
+The distributions were plotted anyway, because the transferable question
+is whether a threshold would be workable on a corpus where fabrication
+*is* a problem:
+
+| Config | Best cutoff catches | at a cost of |
+|---|---|---|
+| `dense` | 78% of out-of-scope | 7% of answerable |
+| `hybrid` | **44%** of out-of-scope | 12% of answerable |
+| `hybrid_rerank` | **100%** of out-of-scope | 12% of answerable |
+
+**A cross-encoder score is a usable confidence signal; an RRF score is
+not.** The reranker separates the two populations by a wide margin
+(+0.84 against -5.98 on average). The RRF score cannot, and the reason
+is structural: it is a *rank fusion artefact, not a similarity*, so a
+document ranking first in both branches scores at the maximum whether or
+not it is relevant. A system that fuses with RRF and then thresholds on
+the fused score is thresholding on noise.
+
+Detail, plot and caveats:
+[`docs/threshold-analysis.md`](docs/threshold-analysis.md).
 
 ## Running it
 
 ```bash
-cp .env.example .env      # add your keys
-docker compose up -d      # starts Qdrant locally
+cp .env.example .env      # add your ANTHROPIC_API_KEY
+docker compose up -d      # starts Qdrant locally on :6333
 pip install -r requirements.txt
+
+python src/ingest.py             # rebuild the collection from data/corpus/
+python src/validate_testset.py   # corpus <-> testset consistency
+python src/harness.py            # all three configs, writes reports/runs/
+```
+
+Reproducing the self-checks:
+
+```bash
+python src/lexical_overlap.py                      # test set bias
+python src/judge_stability.py reports/runs/*.json  # judge repeatability
+python src/score_distribution.py                   # threshold separation
 ```
 
 ## Limitations
@@ -134,14 +241,20 @@ much:
 
 - Synthetic corpus. Real support corpora are messier, longer, and
   contradict themselves.
-- 30 questions is enough to see a direction, not enough for tight
-  confidence intervals.
+- 66 questions is enough to see a direction, not enough for tight
+  confidence intervals. The out-of-scope category is 9 questions, so a
+  0% fabrication rate cannot be distinguished from a merely low one.
+- **`answer_correct` is biased downwards, in a known direction and an
+  unknown quantity** - see the judge section above. `hit@1` and `hit@3`
+  do not pass through the judge and carry none of that uncertainty.
 - Chunking is fixed at one document per chunk and was not optimised. On
   a real corpus, chunking is likely a comparable lever to the ones
   tested here.
 - Single language. A multilingual corpus would likely widen the gap
   between dense-only and hybrid.
-- The judge is an LLM, not a human panel.
+- The judge is an LLM, not a human panel, and it never sees the corpus.
+- Two judging passes measure repeatability, not accuracy. No answer has
+  been hand-graded against the corpus.
 
 ## Stack
 

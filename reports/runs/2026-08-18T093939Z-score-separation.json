@@ -1,0 +1,44 @@
+{
+  "run": "2026-08-18T093939Z",
+  "configs": {
+    "dense": {
+      "in_scope_mean": 0.6574939396491228,
+      "in_scope_min": 0.4827623,
+      "out_of_scope_mean": 0.5311667355555556,
+      "out_of_scope_max": 0.6292561,
+      "clean_gap": false,
+      "best_cutoff": {
+        "threshold": 0.55037,
+        "score": 0.7076023391812866,
+        "out_of_scope_caught": 0.7777777777777778,
+        "in_scope_lost": 0.07017543859649122
+      }
+    },
+    "hybrid": {
+      "in_scope_mean": 0.9215852250877193,
+      "in_scope_min": 0.55,
+      "out_of_scope_mean": 0.7960317488888888,
+      "out_of_scope_max": 1.0,
+      "clean_gap": false,
+      "best_cutoff": {
+        "threshold": 0.75,
+        "score": 0.3216374269005848,
+        "out_of_scope_caught": 0.4444444444444444,
+        "in_scope_lost": 0.12280701754385964
+      }
+    },
+    "hybrid_rerank": {
+      "in_scope_mean": 0.8355484415303197,
+      "in_scope_min": -5.612843990325928,
+      "out_of_scope_mean": -5.9773359298706055,
+      "out_of_scope_max": -2.8262085914611816,
+      "clean_gap": false,
+      "best_cutoff": {
+        "threshold": -2.6352391242980957,
+        "score": 0.8771929824561404,
+        "out_of_scope_caught": 1.0,
+        "in_scope_lost": 0.12280701754385964
+      }
+    }
+  }
+}

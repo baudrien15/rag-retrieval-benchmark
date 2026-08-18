@@ -17,6 +17,78 @@ cannot see.
 
 ---
 
+## An agreement rate measures reproducibility, not accuracy
+
+**This is the most important finding in the project, and it undercuts
+the metric it is measuring.**
+
+Two passes of the same judge on the same inputs tell you whether the
+judge is *consistent*. They tell you nothing about whether it is
+*right*. **A judge that is consistently wrong scores 100% agreement.**
+
+That is not a hypothetical. It happened, and it was found by reading the
+judge's stated reasons rather than by any number.
+
+### The worked example: q03, `hybrid_rerank`
+
+Everything upstream of the judge worked. `hybrid_rerank` retrieved
+`cancellation_policy` — the annotated document — at **rank 1**. The
+generator then answered:
+
+> It depends on what you've booked:
+> - Individual treatment: 24 hours
+> - Spa day package: 72 hours
+> - Treatment course: 48 hours
+
+**All three periods are correct and all three are in the corpus**:
+`cancellation_policy` (24h), `cancellation_spa_days` (72h),
+`cancellation_courses` (48h). The question named no booking type, so
+enumerating the cases is **a better answer than the reference**, which
+gives only the 24-hour figure.
+
+The judge scored it wrong:
+
+> "The assistant invented tiered notice periods (72/48 hours) not in the
+> reference and omitted the 50% late-cancellation charge."
+
+It did not invent them. It correctly retrieved and reported them.
+
+**Both judging passes agreed on this verdict.** It therefore never
+appears as a flip, contributes nothing to the 1.5% disagreement rate,
+and is invisible to every reliability figure in this document. The
+agreement rate says the judge was perfectly consistent here — and it
+was, consistently wrong.
+
+### What this costs, stated plainly
+
+**`answer_correct` understates every configuration.** Answers that are
+correct and better-than-reference are being scored as failures whenever
+they include corpus-supported detail the reference omits.
+
+**We cannot say by how much.** Establishing the true rate would require
+hand-grading all 198 answers against the full corpus, which has not been
+done. The direction of the bias is known; its size is not.
+
+**No number has been adjusted to compensate**, and none should be. A
+correction factor estimated from three or four observed cases would be a
+worse number than an honestly biased one, because it would look precise.
+The figures in `RESULTS.md` are what the judge reported. This section is
+the caveat that travels with them.
+
+### Why it is not just a judge problem
+
+The bias is not uniform across configurations in principle. A
+configuration that retrieves *more* correct documents gives the
+generator *more* corpus-supported detail to include — and therefore more
+opportunities to be marked wrong for including it. **The penalty falls
+hardest on the configuration that retrieves best.**
+
+`hybrid_rerank` leads on `answer_correct` at 89% despite that. Whether
+its true lead is larger than the measured 6 points is unknown, but the
+mechanism gives no reason to think it is smaller.
+
+---
+
 ## Why it needs measuring at all
 
 CLAUDE.md specifies the judge at **temperature 0**. That is not
@@ -141,38 +213,6 @@ lives.
 
 The judge is stable everywhere except at the one point where the prompt
 asks it to do something it lacks the information to do.
-
----
-
-## The same mechanism also produces stable errors
-
-The agreement rate cannot see this, and it is the more serious half.
-
-**q03, `hybrid_rerank`.** Retrieval worked perfectly — `cancellation_policy`
-came back at rank 1. The assistant answered:
-
-> It depends on what you've booked:
-> - Individual treatment: 24 hours
-> - Spa day package: 72 hours
-> - Treatment course: 48 hours
-
-That is a **better answer than the reference**, which gives only the
-24-hour figure. All three periods are correct: `cancellation_policy`,
-`cancellation_spa_days` and `cancellation_courses` respectively. The
-judge said:
-
-> "The assistant invented tiered notice periods (72/48 hours) not in the
-> reference and omitted the 50% late-cancellation charge."
-
-Marked wrong. **Both passes agreed**, so it never appears as a flip and
-contributes nothing to the 1.5% disagreement rate — it is a silent,
-reproducible error in exactly the same mechanism.
-
-The implication: **98.5% agreement is an upper bound on reliability, not
-an estimate of accuracy.** A judge that is consistently wrong scores
-100% here. This case was found by reading the stated reasons, which is
-why `src/judge_stability.py` records both passes' reasoning in its
-artefact rather than only the booleans.
 
 ---
 
