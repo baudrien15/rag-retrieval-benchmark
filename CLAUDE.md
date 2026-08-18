@@ -48,16 +48,16 @@ Do not model this on any real business. All content is invented.
 
 ## Test set design
 
-65 questions, in four categories. The category split is what makes the
+66 questions, in four categories. The category split is what makes the
 final report diagnostic rather than promotional.
 
 The first 30 are the original set and their wording and annotations are
-frozen. Questions 31-65 were added with the corpus expansion and target
+frozen. Questions 31-66 were added with the corpus expansion and target
 the confusable clusters.
 
 | Category | Count | Purpose |
 |----------|-------|---------|
-| `exact_term` | 29 | Prices, treatment names, durations. Expect dense to underperform. |
+| `exact_term` | 30 | Prices, treatment names, durations. Expect dense to underperform. |
 | `semantic` | 15 | Paraphrase, indirect phrasing. Expect dense to do fine. |
 | `multi_fact` | 12 | Answer requires two documents. |
 | `out_of_scope` | 9 | No correct document exists. Correct behaviour is escalation. |
@@ -173,6 +173,11 @@ its exact invocation here.
 
 Phase status lives in `PLAN.md`. Update it there when a phase
 completes, not here.
+
+**Read `DECISIONS.md` before writing anything that describes a result.**
+It holds decisions taken outside the repository — which are not
+re-openable — and the reading reserves that bind every text produced
+here, including how the fabrication metric must be phrased.
 
 Two standing habits regardless of phase:
 

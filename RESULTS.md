@@ -33,11 +33,15 @@ frozen; `hit@1` adopted; `hybrid_rerank` crash fixed.
 
 ### Headline
 
-| Config | hit@1 | hit@3 | Answer correct | Fabrication (OOS) | Artefact |
-|--------|-------|-------|----------------|-------------------|----------|
-| dense | 88% | 95% | 83% | 0% | `runs/2026-08-18T093939Z-dense.json` |
-| hybrid | 84% | 93% | 85% | 0% | `runs/2026-08-18T093939Z-hybrid.json` |
-| **hybrid_rerank** | **91%** | **100%** | **89%** | 0% | `runs/2026-08-18T093939Z-hybrid_rerank.json` |
+| Config | hit@1 | hit@3 | Answer correct | Fabrication (OOS, n=9) | Artefact |
+|--------|-------|-------|----------------|------------------------|----------|
+| dense | 88% | 95% | 83% | 0 / 9 | `runs/2026-08-18T093939Z-dense.json` |
+| hybrid | 84% | 93% | 85% | 0 / 9 | `runs/2026-08-18T093939Z-hybrid.json` |
+| **hybrid_rerank** | **91%** | **100%** | **89%** | 0 / 9 | `runs/2026-08-18T093939Z-hybrid_rerank.json` |
+
+Fabrication is a count, not a rate: no fabrication observed on 9
+out-of-scope questions per configuration, which bounds the true rate at
+roughly 33% at worst (rule of three, 95% confidence interval).
 
 ### hit@1 per category
 
@@ -97,18 +101,21 @@ lexically similar sibling into rank 1 and displaces one of the pair.
 This is a real cost of adding sparse retrieval, not noise — hit@1 does
 not pass through the judge.
 
-**`hybrid` leads on `semantic`** (87% vs 80% hit@1), the category where
-the plan predicted it would add nothing. One question out of 15. Not
-defended as a result.
+**`semantic` hit@1, raw counts:** `dense` 12 of 15, `hybrid` 13 of 15,
+`hybrid_rerank` 12 of 15. The category holds 15 questions and the whole
+spread is one question — smaller than the verdict movement observed
+between the two judge passes. No ordering is read from it.
 
 **Do not read the `dense` vs `hybrid` answer_correct gap.** 83% against
 85% is ~1.3 questions against a ~1 question noise floor, and the ranking
 inverts under a second judging pass (82% against 88%). `hybrid_rerank`
 scores 89% under both passes.
 
-**Fabrication is 0% everywhere.** The generation prompt holds — no
-configuration answered an out-of-scope question. But 9 questions per
-config cannot distinguish 0% from merely low.
+**No fabrication was observed on 9 out-of-scope questions**, in any
+configuration. The generation prompt holds — no configuration answered
+an out-of-scope question. But 9 questions per config bound the true rate
+at roughly 33% at worst (rule of three, 95% confidence interval): the
+observation cannot be distinguished from a merely low rate.
 
 ### The q03 / q66 pair
 
@@ -174,11 +181,11 @@ above.
 Kept because a result that turned out to be uninformative is still a
 result. Full write-up: `docs/saturation-and-expansion.md`.
 
-| Config | hit@3 | Answer correct | Fabrication (OOS) | Artefact |
-|--------|-------|----------------|-------------------|----------|
-| dense | **100%** | 97% | 0% | `runs/2026-08-18T083135Z-dense.json` |
-| hybrid | 96% | 90% | 0% | `runs/2026-08-18T083135Z-hybrid.json` |
-| hybrid_rerank | **100%** | 93% | 0% | `runs/2026-08-18T084052Z-hybrid_rerank.json` |
+| Config | hit@3 | Answer correct | Fabrication (OOS, n=6) | Artefact |
+|--------|-------|----------------|------------------------|----------|
+| dense | **100%** | 97% | 0 / 6 | `runs/2026-08-18T083135Z-dense.json` |
+| hybrid | 96% | 90% | 0 / 6 | `runs/2026-08-18T083135Z-hybrid.json` |
+| hybrid_rerank | **100%** | 93% | 0 / 6 | `runs/2026-08-18T084052Z-hybrid_rerank.json` |
 
 Per category (answer correct):
 

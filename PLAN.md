@@ -145,8 +145,10 @@ reader sees what ran rather than what was intended.
 
 **Status: done — and the answer was "no threshold".**
 
-Fabrication is 0% across all three configurations, so there is nothing
-for a threshold to remove; it could only cost correct answers.
+No fabrication was observed on 9 out-of-scope questions in any of the
+three configurations — a rate bounded at roughly 33% at worst (rule of
+three, 95% confidence interval) — so there is nothing for a threshold to
+remove; it could only cost correct answers.
 `SCORE_THRESHOLD` stays unset. The distributions were plotted anyway,
 and the transferable finding is that a cross-encoder score separates
 in-scope from out-of-scope cleanly (100% caught for 12% lost) while an

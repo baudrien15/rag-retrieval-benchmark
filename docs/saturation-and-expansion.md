@@ -27,11 +27,11 @@ retrieval configurations, on the original 18-document corpus, at
 
 ### answer_correct, and fabrication on out_of_scope
 
-| Config | exact_term | semantic | multi_fact | out_of_scope | Fabrication |
+| Config | exact_term | semantic | multi_fact | out_of_scope | Fabrication (n=6) |
 |---|---|---|---|---|---|
-| `dense` | 100% | 100% | 83% | 100% | 0% |
-| `hybrid` | 90% | 100% | 67% | 100% | 0% |
-| `hybrid_rerank` | 90% | 100% | 83% | 100% | 0% |
+| `dense` | 100% | 100% | 83% | 100% | 0 / 6 |
+| `hybrid` | 90% | 100% | 67% | 100% | 0 / 6 |
+| `hybrid_rerank` | 90% | 100% | 83% | 100% | 0 / 6 |
 
 **Across 90 questions asked, there was exactly one retrieval miss** —
 q14 under `hybrid`. Every other difference in the tables above comes

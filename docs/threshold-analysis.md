@@ -16,11 +16,11 @@ removed against correct answers lost.
 
 **There are no fabrications to remove.**
 
-| Config | Fabrication rate (out_of_scope, n=9) |
+| Config | Fabrications observed (out_of_scope, n=9) |
 |---|---|
-| `dense` | **0%** |
-| `hybrid` | **0%** |
-| `hybrid_rerank` | **0%** |
+| `dense` | **0 / 9** |
+| `hybrid` | **0 / 9** |
+| `hybrid_rerank` | **0 / 9** |
 
 Across 27 out-of-scope questions asked, **not one was answered instead
 of escalated.** The generation prompt refused every time, in every
@@ -39,8 +39,9 @@ remove correct answers.
 
 ### Honest limits on that claim
 
-9 out-of-scope questions per configuration **cannot distinguish 0% from
-merely low**. The 95% confidence interval on 0/9 extends to roughly 30%.
+**No fabrication observed on 9 out-of-scope questions** per configuration
+**cannot be distinguished from a merely low rate**. By the rule of three,
+the 95% confidence interval on 0/9 extends to roughly **33%**.
 What is established is that fabrication is not frequent enough to be the
 thing worth engineering against here — not that it never happens.
 

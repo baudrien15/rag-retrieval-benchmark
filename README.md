@@ -73,11 +73,17 @@ what decides which differences below are readable and which are noise.
 62 documents, 66 questions, three configurations. Full tables, per
 category, with every row citing its run artefact: [`RESULTS.md`](RESULTS.md).
 
-| Config | hit@1 | hit@3 | Answer correct | Fabrication |
-|--------|-------|-------|----------------|-------------|
-| `dense` | 88% | 95% | 83% | 0% |
-| `hybrid` | 84% | 93% | 85% | 0% |
-| **`hybrid_rerank`** | **91%** | **100%** | **89%** | 0% |
+| Config | hit@1 | hit@3 | Answer correct | Fabrication (n=9) |
+|--------|-------|-------|----------------|-------------------|
+| `dense` | 88% | 95% | 83% | 0 / 9 |
+| `hybrid` | 84% | 93% | 85% | 0 / 9 |
+| **`hybrid_rerank`** | **91%** | **100%** | **89%** | 0 / 9 |
+
+Fabrication is reported as a count, not a rate: **no fabrication was
+observed on 9 out-of-scope questions** per configuration. At that sample
+size the true rate is bounded at roughly **33% at worst** (rule of three,
+95% confidence interval), so a bare "0%" would state a precision the
+measurement does not have.
 
 **Reranking is the only intervention that pays.** Its gain over `hybrid`
 (93% → 100% hit@3) is the signature of a reranker working as intended:
@@ -186,9 +192,12 @@ found by reading 44 new documents against 30 existing questions.
 
 ## Confidence threshold
 
-**There was nothing to threshold.** Fabrication rate is **0% across all
-three configurations** - 27 out-of-scope questions asked, not one
-answered instead of escalated. At this scale and on this corpus,
+**There was nothing to threshold.** **No fabrication was observed on 9
+out-of-scope questions** in any of the three configurations - 27
+out-of-scope questions asked in total, not one answered instead of
+escalated. At that sample size the true rate is bounded at roughly **33%
+at worst** (rule of three, 95% confidence interval). At this scale and on
+this corpus,
 fabrication is not the dominant failure mode. Retrieving the wrong
 member of a confusable cluster is, and a confidence threshold does not
 help with that, because those answers come back with *high* scores.
@@ -242,8 +251,10 @@ much:
 - Synthetic corpus. Real support corpora are messier, longer, and
   contradict themselves.
 - 66 questions is enough to see a direction, not enough for tight
-  confidence intervals. The out-of-scope category is 9 questions, so a
-  0% fabrication rate cannot be distinguished from a merely low one.
+  confidence intervals. The out-of-scope category is 9 questions, so
+  **no fabrication observed on 9 out-of-scope questions** bounds the true
+  rate at roughly **33% at worst** (rule of three, 95% confidence
+  interval) - it cannot be distinguished from a merely low one.
 - **`answer_correct` is biased downwards, in a known direction and an
   unknown quantity** - see the judge section above. `hit@1` and `hit@3`
   do not pass through the judge and carry none of that uncertainty.
