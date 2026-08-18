@@ -168,15 +168,51 @@ threshold itself.
 
 ## Phase 5 — Workflow demo
 
-**Status: not started.**
+**Status: in progress.** Detector, service and canvas built and tested
+locally. Not yet imported into the remote n8n instance, so the "readable
+on screen" criterion is not met.
 
 An n8n workflow making the pipeline legible at a glance:
 inbound webhook → conversation state check → hybrid retrieval →
-threshold test → generated answer or escalation.
+generated answer or escalation.
 
 A simulated webhook call is sufficient. No telephony provider needed.
 
 **Done when:** the canvas is readable on screen.
+
+**The threshold test node was dropped.** Phase 4 measured that no
+threshold is worth adopting, so a gate node would demonstrate a
+component the benchmark rejected. It survives on the canvas as a sticky
+note carrying the measured cost — decision 6 in `DECISIONS.md`.
+
+**Escalation routing does not come from the generator.** The judge's
+`escalated` field needs a reference answer and does not exist at serving
+time, and making the generator emit a structured field would have
+changed `GENERATION_SYSTEM`, the constant held identical across the
+three runs. Instead a pure function reads the generated answer:
+`src/escalation.py`, written on the `dense` artefacts and measured on
+the `hybrid` and `hybrid_rerank` artefacts — 1 missed escalation of 37
+rows, 0 wrong escalations of 155. **The split is by configuration, not
+by question**: all 66 questions appear in both sets, so the genuinely
+unseen evidence is **3 of 4 answers**. Reported at that strength in
+`docs/escalation-detector.md`, which also records why a question-level
+split is the better design for a rerun.
+
+**Delivered so far.**
+
+- `src/escalation.py` — the detector, pure, no model call
+- `src/escalation_eval.py` — the measurement and its split caveat, artefact in
+  `reports/runs/`
+- `src/service.py` — FastAPI front end, shared-secret header, imports
+  `retrieval.py` and `generation.py` unchanged
+- `src/test_routing.py` — both branches end to end, passing 4/4
+- `n8n/lumen-support.json` — the canvas
+- `docs/escalation-detector.md` — the rule, the split, both rates, the
+  single disagreement
+
+**Still to do.** Import the workflow on the VPS, run it through a
+cloudflared tunnel, and add the conversation state check that phase 6
+defines.
 
 ---
 

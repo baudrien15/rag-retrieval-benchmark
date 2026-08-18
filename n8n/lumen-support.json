@@ -1,0 +1,235 @@
+{
+  "name": "Lumen Spa support - retrieval and escalation",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Setup\n\n**1. Start the service on the machine that holds the corpus:**\n```\nuvicorn service:app --app-dir src --port 8000\ncloudflared tunnel --url http://localhost:8000\n```\n\n**2. Paste the tunnel URL** into the `Ask the retrieval service` node.\n\n**3. Set `LUMEN_SERVICE_SECRET`** in this n8n instance's environment, to the same value the service reads. The tunnel URL is public: without the shared header the endpoint is an open Anthropic API key.\n\nRetrieval config is `hybrid_rerank`, `top_k=3` - the configuration measured in RESULTS.md.",
+        "height": 380,
+        "width": 460
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-460, -180],
+      "id": "a1f0c2d4-1111-4a0b-9c31-000000000001",
+      "name": "Sticky Note - setup"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lumen-support",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [40, 20],
+      "id": "a1f0c2d4-2222-4a0b-9c31-000000000002",
+      "name": "Customer message",
+      "webhookId": "b7c1e6a2-4f3d-4a58-9d21-5e2f7c9a1b40"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://REPLACE-WITH-TUNNEL-URL/answer",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameter": [
+            {
+              "name": "X-Lumen-Secret",
+              "value": "={{ $env.LUMEN_SERVICE_SECRET }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ question: $json.body.question, conversation_id: $json.body.conversation_id }) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [300, 20],
+      "id": "a1f0c2d4-3333-4a0b-9c31-000000000003",
+      "name": "Ask the retrieval service"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c0000000-0000-4000-8000-000000000001",
+              "leftValue": "={{ $json.escalated }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [580, 20],
+      "id": "a1f0c2d4-4444-4a0b-9c31-000000000004",
+      "name": "Did the assistant decline?"
+    },
+    {
+      "parameters": {
+        "content": "Gate sur score reranker testé en phase 4 : attrape 100% du hors-scope, coûte 12% de réponses valides. Non adopté. Voir docs/threshold-analysis.md.",
+        "height": 200,
+        "width": 340,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [820, -280],
+      "id": "a1f0c2d4-5555-4a0b-9c31-000000000005",
+      "name": "Sticky Note - no threshold gate"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d0000000-0000-4000-8000-000000000001",
+              "name": "handover",
+              "value": "human",
+              "type": "string"
+            },
+            {
+              "id": "d0000000-0000-4000-8000-000000000002",
+              "name": "conversation_id",
+              "value": "={{ $json.conversation_id }}",
+              "type": "string"
+            },
+            {
+              "id": "d0000000-0000-4000-8000-000000000003",
+              "name": "question",
+              "value": "={{ $json.question }}",
+              "type": "string"
+            },
+            {
+              "id": "d0000000-0000-4000-8000-000000000004",
+              "name": "assistant_reply",
+              "value": "={{ $json.answer }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [860, -60],
+      "id": "a1f0c2d4-6666-4a0b-9c31-000000000006",
+      "name": "Hand over to a human"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ escalated: true, handover: 'human', reply: $json.assistant_reply }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1120, -60],
+      "id": "a1f0c2d4-7777-4a0b-9c31-000000000007",
+      "name": "Respond - escalated"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ escalated: false, reply: $json.answer, sources: $json.retrieved.map(d => d.doc_id) }) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [860, 160],
+      "id": "a1f0c2d4-8888-4a0b-9c31-000000000008",
+      "name": "Respond - answer"
+    },
+    {
+      "parameters": {
+        "content": "The routing field `escalated` is a **boolean emitted by the service**, produced by `src/escalation.py` reading the generated answer.\n\nIt is not a substring match on prose, and it does not change the generator: `GENERATION_SYSTEM` and `GENERATION_PARAMS` are the constants held identical across the three benchmark runs.\n\nMeasured against the judge on configurations it was not written on: 1 missed escalation of 37 rows, 0 wrong escalations of 155. The split is by configuration rather than by question, so the genuinely unseen evidence is **3 of 4 answers** - see `docs/escalation-detector.md`.\n\nStrict type validation is on. A response without a boolean `escalated` errors the node rather than falling through to the answer branch.",
+        "height": 300,
+        "width": 400,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [400, 260],
+      "id": "a1f0c2d4-9999-4a0b-9c31-000000000009",
+      "name": "Sticky Note - how routing works"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Customer message": {
+      "main": [
+        [
+          {
+            "node": "Ask the retrieval service",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ask the retrieval service": {
+      "main": [
+        [
+          {
+            "node": "Did the assistant decline?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Did the assistant decline?": {
+      "main": [
+        [
+          {
+            "node": "Hand over to a human",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond - answer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hand over to a human": {
+      "main": [
+        [
+          {
+            "node": "Respond - escalated",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

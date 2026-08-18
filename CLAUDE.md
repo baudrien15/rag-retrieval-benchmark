@@ -161,6 +161,20 @@ python src/query_check.py        # manual retrieval check, 4 sample questions
 python src/query_check.py "..."  # same, on an ad-hoc question
 ```
 
+Phase 5 — the serving demo. Not part of the benchmark; nothing here can
+change a published number.
+
+```bash
+python src/escalation_eval.py    # escalation detector vs the judge, split by config
+python src/test_routing.py       # both workflow branches, end to end (2 API calls)
+
+uvicorn service:app --app-dir src --port 8000   # the endpoint n8n calls
+cloudflared tunnel --url http://localhost:8000  # expose it to the remote n8n
+```
+
+`service.py` refuses to serve unless `LUMEN_SERVICE_SECRET` is set — the
+tunnel URL is public. `n8n/lumen-support.json` is the workflow to import.
+
 `ingest.py` drops and recreates the collection every time. That is
 intentional — 18 documents are cheap to re-encode, and a rebuilt
 collection is easier to trust than a patched one.

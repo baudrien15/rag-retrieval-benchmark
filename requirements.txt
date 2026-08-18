@@ -7,6 +7,11 @@ pandas
 matplotlib
 tabulate
 
+# Phase 5 only: the HTTP front end the n8n workflow calls (src/service.py).
+# Nothing in phases 1-4 imports these — the benchmark runs without them.
+fastapi
+uvicorn
+
 # BGE-M3 dense + sparse, and BGE-reranker-v2-m3 in phase 3.
 #
 # fastembed was the first choice and does not work here: as of 0.8.0 it
