@@ -172,9 +172,14 @@ rejected — every configuration would escalate correctly and
 
 ### Forbidden topics
 
-These six subjects must never be covered by any corpus document. If one
+These nine subjects must never be covered by any corpus document. If one
 is added later, the corresponding question stops being out of scope and
 the annotation becomes false.
+
+Subjects 7-9 were added with the corpus expansion. Subject 6 was very
+nearly broken by it: a draft of `massage_aroma_candle` said the candle
+is not taken home, which answers q30. See
+`docs/annotation-review-expansion.md`.
 
 1. Laser hair removal, or any treatment not on the price lists
 2. Health insurance, reimbursement, mutuelle
@@ -186,6 +191,10 @@ the annotation becomes false.
    should avoid what; it never explains what a symptom means
 6. Retail sale of oils or products — `treatments_body` and `facilities`
    must not mention a shop
+7. Nail treatments — manicure, pedicure (added with the expansion, q61)
+8. Accommodation, overnight stays, rooms (added with the expansion, q62)
+9. Treatments performed at the customer's home (added with the
+   expansion, q63)
 
 Re-read this list against the corpus whenever a document is edited.
 

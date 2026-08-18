@@ -111,11 +111,45 @@ def search_hybrid(
 
 @lru_cache(maxsize=1)
 def _reranker():
-    from FlagEmbedding import FlagReranker
+    """The cross-encoder, loaded straight from transformers.
 
-    # use_fp16 off for the same reason as the embedder: same input, same
-    # score, every run.
-    return FlagReranker(RERANKER_MODEL, use_fp16=False)
+    FlagEmbedding's FlagReranker cannot be used here: it reaches for the
+    slow tokenizer's `prepare_for_model`, which transformers 5 removed,
+    and so raises AttributeError on every call. The model is unchanged —
+    BAAI/bge-reranker-v2-m3, the one CLAUDE.md specifies — and only the
+    loading path differs. Embeddings still go through FlagEmbedding,
+    which works fine on transformers 5.
+    """
+    import torch  # noqa: F401 - imported here to keep the cost off import time
+    from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+    tokenizer = AutoTokenizer.from_pretrained(RERANKER_MODEL)
+    # eval mode and float32, for the same reason the embedder skips fp16:
+    # same pair in, same score out, every run.
+    model = AutoModelForSequenceClassification.from_pretrained(RERANKER_MODEL).eval()
+    return tokenizer, model
+
+
+def _rerank_scores(pairs: list[tuple[str, str]]) -> list[float]:
+    """Raw cross-encoder logits, one per (question, document) pair.
+
+    Left unnormalised, which is what FlagReranker returned by default. A
+    sigmoid would change the numbers written to the artefact but not the
+    ranking, so it would buy nothing here.
+    """
+    import torch
+
+    tokenizer, model = _reranker()
+    with torch.no_grad():
+        batch = tokenizer(
+            [question for question, _ in pairs],
+            [document for _, document in pairs],
+            padding=True,
+            truncation=True,
+            max_length=512,
+            return_tensors="pt",
+        )
+        return model(**batch).logits.view(-1).float().tolist()
 
 
 def search_hybrid_rerank(
@@ -139,10 +173,7 @@ def search_hybrid_rerank(
     if not fused:
         return []
 
-    scores = _reranker().compute_score([(question, hit.text) for hit in fused])
-    # compute_score returns a bare float when given a single pair.
-    if not isinstance(scores, list):
-        scores = [scores]
+    scores = _rerank_scores([(question, hit.text) for hit in fused])
 
     ranked = sorted(
         (Hit(doc_id=hit.doc_id, score=float(score), text=hit.text)

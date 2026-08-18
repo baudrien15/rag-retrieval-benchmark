@@ -23,13 +23,13 @@ CORPUS_DIR = ROOT / "data" / "corpus"
 TESTSET = ROOT / "data" / "testset.json"
 
 EXPECTED_CATEGORY_COUNTS = {
-    "exact_term": 10,
-    "semantic": 8,
-    "multi_fact": 6,
-    "out_of_scope": 6,
+    "exact_term": 30,
+    "semantic": 15,
+    "multi_fact": 12,
+    "out_of_scope": 9,
 }
 
-EXPECTED_DOC_COUNT = 18
+EXPECTED_DOC_COUNT = 62
 
 # Subjects the corpus must never cover. Each one backs an out_of_scope
 # question: if a document starts covering it, that question stops being
@@ -44,6 +44,10 @@ FORBIDDEN_TERMS = {
     "corporate invoicing": ["invoice", "purchase order"],
     # "shop" alone matches "bookshop" next door, so match the possessive forms
     "retail sale of products": ["retail", "for sale", "buy the", "our shop", "gift shop"],
+    # Added with the phase 1b expansion, for q61-q63.
+    "nail treatments": ["manicure", "pedicure", "nail bar"],
+    "accommodation": ["overnight stay", "guest room", "bed and breakfast"],
+    "treatments at the customer's home": ["home visit", "we come to you", "in your home"],
 }
 
 

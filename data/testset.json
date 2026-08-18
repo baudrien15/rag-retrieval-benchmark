@@ -4,7 +4,9 @@
       "id": "q01",
       "question": "How much is the hot stone massage?",
       "category": "exact_term",
-      "expected_doc_ids": ["pricing_massage"],
+      "expected_doc_ids": [
+        "pricing_massage"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "The Hot Stone Massage is 95 EUR for 75 minutes."
     },
@@ -12,7 +14,9 @@
       "id": "q02",
       "question": "How long does the Lumen Signature Journey take?",
       "category": "exact_term",
-      "expected_doc_ids": ["treatments_signature"],
+      "expected_doc_ids": [
+        "treatments_signature"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "Allow three hours and fifteen minutes from arrival to departure, of which two hours and forty minutes is treatment time."
     },
@@ -20,7 +24,9 @@
       "id": "q03",
       "question": "How many hours ahead do I need to cancel?",
       "category": "exact_term",
-      "expected_doc_ids": ["cancellation_policy"],
+      "expected_doc_ids": [
+        "cancellation_policy"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "At least 24 hours before the appointment. Cancelling less than 24 hours ahead is charged at 50% of the treatment price."
     },
@@ -28,7 +34,9 @@
       "id": "q04",
       "question": "What does the seaweed wrap cost?",
       "category": "exact_term",
-      "expected_doc_ids": ["pricing_body_rituals"],
+      "expected_doc_ids": [
+        "pricing_body_rituals"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "The Seaweed Wrap is 80 EUR for 60 minutes."
     },
@@ -36,7 +44,9 @@
       "id": "q05",
       "question": "How long is a gift card valid?",
       "category": "exact_term",
-      "expected_doc_ids": ["gift_cards"],
+      "expected_doc_ids": [
+        "gift_cards"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "12 months from the date of purchase. An expired card cannot be extended and has no remaining value."
     },
@@ -44,7 +54,9 @@
       "id": "q06",
       "question": "How much is the monthly Serenity membership?",
       "category": "exact_term",
-      "expected_doc_ids": ["memberships"],
+      "expected_doc_ids": [
+        "memberships"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "79 EUR per month."
     },
@@ -52,7 +64,9 @@
       "id": "q07",
       "question": "What time do you open on Sunday?",
       "category": "exact_term",
-      "expected_doc_ids": ["opening_hours"],
+      "expected_doc_ids": [
+        "opening_hours"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "10:00 on Sunday, closing at 17:00."
     },
@@ -60,7 +74,9 @@
       "id": "q08",
       "question": "What's the minimum group size for a private booking?",
       "category": "exact_term",
-      "expected_doc_ids": ["groups_and_events"],
+      "expected_doc_ids": [
+        "groups_and_events"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "8 people."
     },
@@ -68,7 +84,9 @@
       "id": "q09",
       "question": "How much deposit is taken when I book?",
       "category": "exact_term",
-      "expected_doc_ids": ["booking_and_payment"],
+      "expected_doc_ids": [
+        "booking_and_payment"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "30 EUR per treatment, taken when the booking is confirmed and deducted from the final price on the day."
     },
@@ -76,7 +94,9 @@
       "id": "q10",
       "question": "What does the Hydraglow facial cost?",
       "category": "exact_term",
-      "expected_doc_ids": ["pricing_facials"],
+      "expected_doc_ids": [
+        "pricing_facials"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "The Hydraglow Facial is 90 EUR for 60 minutes."
     },
@@ -84,7 +104,9 @@
       "id": "q11",
       "question": "I've been training hard and my legs are wrecked. What would you suggest?",
       "category": "semantic",
-      "expected_doc_ids": ["treatments_massage"],
+      "expected_doc_ids": [
+        "treatments_massage"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "The Deep Tissue Massage: firm, slow pressure into the deeper muscle layers, suited to recovery after repeated physical effort or heavy training."
     },
@@ -92,7 +114,9 @@
       "id": "q12",
       "question": "Can I bring my children?",
       "category": "semantic",
-      "expected_doc_ids": ["house_rules"],
+      "expected_doc_ids": [
+        "house_rules"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "No. The minimum age is 16, and under-16s are not admitted even accompanied or in the reception area."
     },
@@ -100,7 +124,9 @@
       "id": "q13",
       "question": "What happens if I turn up late?",
       "category": "semantic",
-      "expected_doc_ids": ["cancellation_policy"],
+      "expected_doc_ids": [
+        "cancellation_policy"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "The treatment still ends at its scheduled end time and the full price is charged. More than 20 minutes late is treated as a no-show."
     },
@@ -108,7 +134,9 @@
       "id": "q14",
       "question": "Is there anywhere to unwind before my treatment?",
       "category": "semantic",
-      "expected_doc_ids": ["facilities"],
+      "expected_doc_ids": [
+        "facilities"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "The relaxation lounge: twelve reclining chairs, low light, no phones, with herbal tea, water and fruit served through the day. Arriving early to sit there is encouraged."
     },
@@ -116,7 +144,9 @@
       "id": "q15",
       "question": "I've never been to a spa before. What should I know?",
       "category": "semantic",
-      "expected_doc_ids": ["first_visit"],
+      "expected_doc_ids": [
+        "first_visit"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "Arrive 15 minutes early, bring swimwear if you want the sauna or hammam, leave jewellery at home, and complete a short health form on arrival. Robes, slippers and towels are provided."
     },
@@ -124,7 +154,9 @@
       "id": "q16",
       "question": "How do I get to you without a car?",
       "category": "semantic",
-      "expected_doc_ids": ["location_and_access"],
+      "expected_doc_ids": [
+        "location_and_access"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "Tram line 1 to the Tanneurs stop, then four minutes on foot. Bus route 26 stops at Pont Sauvetout, six minutes away. Bicycle racks are inside the archway."
     },
@@ -132,7 +164,9 @@
       "id": "q17",
       "question": "My skin looks dull. Is there anything that would help?",
       "category": "semantic",
-      "expected_doc_ids": ["treatments_facials"],
+      "expected_doc_ids": [
+        "treatments_facials"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "The Hydraglow Facial, our hydration facial, aimed at skin that looks tired, flat or lacking radiance."
     },
@@ -140,7 +174,9 @@
       "id": "q18",
       "question": "I'd like to give this to someone as a present.",
       "category": "semantic",
-      "expected_doc_ids": ["gift_cards"],
+      "expected_doc_ids": [
+        "gift_cards"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "A gift card, sold in fixed amounts of 50, 100 and 200 EUR or for a named treatment. It is valid 12 months and is transferable."
     },
@@ -148,7 +184,10 @@
       "id": "q19",
       "question": "I'm pregnant. Which massage can I book?",
       "category": "multi_fact",
-      "expected_doc_ids": ["contraindications", "treatments_massage"],
+      "expected_doc_ids": [
+        "contraindications",
+        "treatments_massage"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "The Prenatal Massage, available from the second trimester, performed side-lying with bolster support and unscented oil. Hot stone treatment and full-body wraps are excluded during pregnancy."
     },
@@ -156,7 +195,10 @@
       "id": "q20",
       "question": "How much is the Signature Journey and how long should I set aside?",
       "category": "multi_fact",
-      "expected_doc_ids": ["pricing_body_rituals", "treatments_signature"],
+      "expected_doc_ids": [
+        "pricing_body_rituals",
+        "treatments_signature"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "240 EUR per person, and allow three hours and fifteen minutes."
     },
@@ -164,7 +206,10 @@
       "id": "q21",
       "question": "I'm on the Serenity membership. If I cancel a session at short notice, am I still charged?",
       "category": "multi_fact",
-      "expected_doc_ids": ["memberships", "cancellation_policy"],
+      "expected_doc_ids": [
+        "memberships",
+        "cancellation_policy"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "Yes. The session counts as used for that month, and the standard late-cancellation charge of 50% of the treatment price applies on top."
     },
@@ -172,7 +217,10 @@
       "id": "q22",
       "question": "How much is the deposit, and can I cover it with a gift card?",
       "category": "multi_fact",
-      "expected_doc_ids": ["gift_cards", "booking_and_payment"],
+      "expected_doc_ids": [
+        "gift_cards",
+        "booking_and_payment"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "No. The 30 EUR deposit must be paid by card or in cash. The gift card can then be applied against the balance on the day."
     },
@@ -180,7 +228,10 @@
       "id": "q23",
       "question": "I had surgery six weeks ago. Can I use the sauna?",
       "category": "multi_fact",
-      "expected_doc_ids": ["contraindications", "facilities"],
+      "expected_doc_ids": [
+        "contraindications",
+        "facilities"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "No. The sauna is one of the two heat facilities, and heat should be avoided for eight weeks after surgery, so six weeks is too soon."
     },
@@ -188,7 +239,10 @@
       "id": "q24",
       "question": "There are eight of us and we'd like the place to ourselves. Can you do a Sunday?",
       "category": "multi_fact",
-      "expected_doc_ids": ["groups_and_events", "opening_hours"],
+      "expected_doc_ids": [
+        "groups_and_events",
+        "opening_hours"
+      ],
       "expected_behavior": "answer",
       "expected_answer": "Eight meets the minimum of 8 for private hire, but a Sunday booking must fit inside Sunday opening hours of 10:00 to 17:00, and private hire needs three weeks' notice."
     },
@@ -239,6 +293,366 @@
       "expected_doc_ids": [],
       "expected_behavior": "escalate",
       "expected_answer": null
+    },
+    {
+      "id": "q31",
+      "question": "How much is the Swedish Classic Massage for 90 minutes?",
+      "category": "exact_term",
+      "expected_doc_ids": [
+        "massage_swedish_classic"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "108 EUR for 90 minutes. The 60-minute version is 78 EUR."
+    },
+    {
+      "id": "q32",
+      "question": "How long is the Four Hands Massage?",
+      "category": "exact_term",
+      "expected_doc_ids": [
+        "massage_four_hands"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "50 minutes, at 150 EUR."
+    },
+    {
+      "id": "q33",
+      "question": "What does the Himalayan Salt Stone Massage cost?",
+      "category": "exact_term",
+      "expected_doc_ids": [
+        "massage_himalayan_salt_stone"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "102 EUR for 75 minutes."
+    },
+    {
+      "id": "q34",
+      "question": "How much is the Express Chair Massage?",
+      "category": "exact_term",
+      "expected_doc_ids": [
+        "massage_chair_express"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "30 EUR for 20 minutes."
+    },
+    {
+      "id": "q35",
+      "question": "What's the price of the Lymphatic Drainage Massage for 80 minutes?",
+      "category": "exact_term",
+      "expected_doc_ids": [
+        "massage_lymphatic_drainage"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "112 EUR for 80 minutes. The 50-minute version is 82 EUR."
+    },
+    {
+      "id": "q36",
+      "question": "How much is the Shiatsu Massage?",
+      "category": "exact_term",
+      "expected_doc_ids": [
+        "massage_shiatsu"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "88 EUR for 60 minutes."
+    },
+    {
+      "id": "q37",
+      "question": "How long does the Herbal Poultice Massage take?",
+      "category": "exact_term",
+      "expected_doc_ids": [
+        "massage_herbal_poultice"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "80 minutes, at 118 EUR."
+    },
+    {
+      "id": "q38",
+      "question": "How much is the Age Focus Facial?",
+      "category": "exact_term",
+      "expected_doc_ids": [
+        "facial_age_focus"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "135 EUR for 90 minutes."
+    },
+    {
+      "id": "q39",
+      "question": "How long does the Express Refresh Facial take?",
+      "category": "exact_term",
+      "expected_doc_ids": [
+        "facial_express_refresh"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "30 minutes, at 45 EUR."
+    },
+    {
+      "id": "q40",
+      "question": "What does the Men's Essential Facial cost?",
+      "category": "exact_term",
+      "expected_doc_ids": [
+        "facial_mens_essential"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "68 EUR for 45 minutes."
+    },
+    {
+      "id": "q41",
+      "question": "How much is the Algae Detox Wrap?",
+      "category": "exact_term",
+      "expected_doc_ids": [
+        "body_algae_detox_wrap"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "88 EUR for 60 minutes."
+    },
+    {
+      "id": "q42",
+      "question": "How long am I wrapped during the Clay Cocoon Ritual?",
+      "category": "exact_term",
+      "expected_doc_ids": [
+        "body_clay_cocoon"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "30 of the 75 minutes."
+    },
+    {
+      "id": "q43",
+      "question": "What does the Mineral Bath Soak cost?",
+      "category": "exact_term",
+      "expected_doc_ids": [
+        "body_mineral_soak"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "40 EUR for 30 minutes."
+    },
+    {
+      "id": "q44",
+      "question": "How much notice do I need to cancel a spa day package?",
+      "category": "exact_term",
+      "expected_doc_ids": [
+        "cancellation_spa_days"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "72 hours before the booked date. With less notice, 40% of the package price is charged."
+    },
+    {
+      "id": "q45",
+      "question": "What am I charged if I cancel a workshop place late?",
+      "category": "exact_term",
+      "expected_doc_ids": [
+        "cancellation_workshops"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "50% of the workshop fee. The notice required is 5 days."
+    },
+    {
+      "id": "q46",
+      "question": "What's the price of the Duo Day package?",
+      "category": "exact_term",
+      "expected_doc_ids": [
+        "spa_day_duo"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "340 EUR for two people. It is priced for the pair and is not available for one person."
+    },
+    {
+      "id": "q47",
+      "question": "What time does the Twilight Evening package start?",
+      "category": "exact_term",
+      "expected_doc_ids": [
+        "spa_day_twilight"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "18:00, running until 21:00."
+    },
+    {
+      "id": "q48",
+      "question": "How long do you keep lost property?",
+      "category": "exact_term",
+      "expected_doc_ids": [
+        "lost_property"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "30 days from the day the item was found."
+    },
+    {
+      "id": "q49",
+      "question": "How long do you hold a waiting-list slot for me?",
+      "category": "exact_term",
+      "expected_doc_ids": [
+        "waiting_list"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "Fifteen minutes from the call."
+    },
+    {
+      "id": "q50",
+      "question": "My skin goes tight and red after I wash it. Is there a gentle facial?",
+      "category": "semantic",
+      "expected_doc_ids": [
+        "facial_soothe_comfort"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "The Soothe Comfort Facial, for skin that reacts easily, feels tight after washing or flushes in the cold. No steam and no extraction."
+    },
+    {
+      "id": "q51",
+      "question": "Can I bring my dog?",
+      "category": "semantic",
+      "expected_doc_ids": [
+        "pets_policy"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "No. Animals are not admitted anywhere in the building. An assistance dog is the exception and is welcome throughout, with no notice needed."
+    },
+    {
+      "id": "q52",
+      "question": "I use a wheelchair. Will I be able to get in and be treated?",
+      "category": "semantic",
+      "expected_doc_ids": [
+        "accessibility"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "Yes. The entrance is level, the archway is 1.4 metres at its narrowest, and reception, the relaxation lounge, the wet rooms and four dry treatment rooms are on the ground floor. Two tables lower to 48 cm for transfers if you say so when booking."
+    },
+    {
+      "id": "q53",
+      "question": "Would it be possible to ask for a woman?",
+      "category": "semantic",
+      "expected_doc_ids": [
+        "therapist_requests"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "Yes. You can ask for a male or a female therapist without naming anyone and without giving a reason."
+    },
+    {
+      "id": "q54",
+      "question": "I shave every day and my neck keeps breaking out.",
+      "category": "semantic",
+      "expected_doc_ids": [
+        "facial_mens_essential"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "The Men's Essential Facial, for skin that is shaved regularly and reacts to it, with attention to ingrown hairs along the jaw and neck."
+    },
+    {
+      "id": "q55",
+      "question": "Is there anything where I just soak quietly on my own?",
+      "category": "semantic",
+      "expected_doc_ids": [
+        "body_mineral_soak"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "The Mineral Bath Soak: a private bath at 37 degrees, taken alone with the lights low and no therapist present."
+    },
+    {
+      "id": "q56",
+      "question": "The slot I want is taken. Can you let me know if anything comes free?",
+      "category": "semantic",
+      "expected_doc_ids": [
+        "waiting_list"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "Yes, reception can add you to the waiting list at no charge. Names are called in order, usually a day ahead."
+    },
+    {
+      "id": "q57",
+      "question": "How much would the classic full-body massage, an hour of it, cost me on a Sunday all in?",
+      "category": "multi_fact",
+      "expected_doc_ids": [
+        "massage_swedish_classic",
+        "pricing_massage"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "93 EUR: 78 EUR for the 60-minute treatment plus the 15 EUR Sunday supplement."
+    },
+    {
+      "id": "q58",
+      "question": "I pay for the dearer of the two monthly plans. Does that cover the clay wrap ritual?",
+      "category": "multi_fact",
+      "expected_doc_ids": [
+        "memberships",
+        "body_clay_cocoon"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "No. The Clay Cocoon Ritual is a multi-step ritual and multi-step rituals are not included, but you may put the value of the monthly treatment towards it."
+    },
+    {
+      "id": "q59",
+      "question": "We hired the whole place for a party and now have to call it off with a week to go. What do we lose?",
+      "category": "multi_fact",
+      "expected_doc_ids": [
+        "groups_and_events",
+        "cancellation_private_hire"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "The 50% paid at the time of booking, which is not returned. Private hire needs 14 days' notice to cancel and a week is less than that."
+    },
+    {
+      "id": "q60",
+      "question": "Is there a surcharge on the quick seated massage if I come in late afternoon or evening, and how much?",
+      "category": "multi_fact",
+      "expected_doc_ids": [
+        "massage_chair_express",
+        "pricing_massage"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "Yes, 15 EUR after 19:00 on a weekday or at any time on Sunday."
+    },
+    {
+      "id": "q61",
+      "question": "I'm on the cheaper monthly plan. Could this month's treatment be the one with the steamed herb bundles?",
+      "category": "multi_fact",
+      "expected_doc_ids": [
+        "memberships",
+        "massage_herbal_poultice"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "No. The monthly treatment covers a standard 60-minute treatment and the Herbal Poultice Massage is 80 minutes."
+    },
+    {
+      "id": "q62",
+      "question": "I'm blind and travel with a dog. Can she stay in the room while I have the mud treatment?",
+      "category": "multi_fact",
+      "expected_doc_ids": [
+        "pets_policy",
+        "body_mud_wrap"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "Yes. An assistance dog is welcome throughout the building, and because the Mineral Mud Wrap is done in a wet room where the floor reaches 30 degrees, a mat is brought so the dog can settle somewhere cooler."
+    },
+    {
+      "id": "q63",
+      "question": "Do you do manicures and pedicures?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null
+    },
+    {
+      "id": "q64",
+      "question": "Do you have rooms so we can stay overnight?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null
+    },
+    {
+      "id": "q65",
+      "question": "Can a therapist come and treat me at my home?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null
+    },
+    {
+      "id": "q66",
+      "question": "How many hours ahead do I need to cancel a single treatment?",
+      "category": "exact_term",
+      "expected_doc_ids": [
+        "cancellation_policy"
+      ],
+      "expected_behavior": "answer",
+      "expected_answer": "At least 24 hours before the appointment. Cancelling less than 24 hours ahead is charged at 50% of the treatment price."
     }
   ]
 }

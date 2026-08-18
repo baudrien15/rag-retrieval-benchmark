@@ -105,6 +105,7 @@ def score(records: list[dict]) -> dict:
         # reported only for the categories that have one.
         if answerable:
             summary["hit_at_3"] = sum(r["hit"] for r in answerable) / len(answerable)
+            summary["hit_at_1"] = sum(r["hit_1"] for r in answerable) / len(answerable)
         if category == "out_of_scope":
             summary["fabrication_rate"] = (
                 sum(not r["escalated"] for r in rows) / len(rows)
@@ -116,6 +117,7 @@ def score(records: list[dict]) -> dict:
     return {
         "overall": {
             "hit_at_3": sum(r["hit"] for r in answerable) / len(answerable),
+            "hit_at_1": sum(r["hit_1"] for r in answerable) / len(answerable),
             "answer_correct": sum(r["correct"] for r in records) / len(records),
             "fabrication_rate": sum(not r["escalated"] for r in oos) / len(oos),
         },
@@ -145,6 +147,10 @@ def run_config(config: str, questions: list[dict], run_id: str, out_dir: Path) -
             "retrieved_doc_ids": retrieved,
             "retrieval_scores": [h.score for h in hits],
             "hit": bool(expected & set(retrieved)),
+            # hit@1 as well as hit@3: with confusable clusters in the
+            # corpus, rank 1 is where finding the right cluster but the
+            # wrong member shows up. hit@3 hides that.
+            "hit_1": bool(expected & set(retrieved[:1])),
             "answer": answer,
             "correct": bool(verdict["correct"]),
             "escalated": bool(verdict["escalated"]),
@@ -159,17 +165,20 @@ def run_config(config: str, questions: list[dict], run_id: str, out_dir: Path) -
     path = out_dir / f"{run_id}-{config}.json"
     path.write_text(json.dumps(artefact, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"  -> {path.relative_to(Path.cwd())}")
-    return {"config": config, "metrics": metrics, "artefact": path.name}
+    # The directory is part of the citation: a --tmp run that cited
+    # runs/ would put a filename in RESULTS.md that does not exist there.
+    return {"config": config, "metrics": metrics,
+            "artefact": f"{out_dir.name}/{path.name}"}
 
 
 def print_table(results: list[dict]) -> None:
-    print("\n| Config | hit@3 | Answer correct | Fabrication (OOS) | Artefact |")
-    print("|--------|-------|----------------|-------------------|----------|")
+    print("\n| Config | hit@1 | hit@3 | Answer correct | Fabrication (OOS) | Artefact |")
+    print("|--------|-------|-------|----------------|-------------------|----------|")
     for r in results:
         o = r["metrics"]["overall"]
         print(
-            f"| {r['config']} | {o['hit_at_3']:.0%} | {o['answer_correct']:.0%} "
-            f"| {o['fabrication_rate']:.0%} | `runs/{r['artefact']}` |"
+            f"| {r['config']} | {o['hit_at_1']:.0%} | {o['hit_at_3']:.0%} | {o['answer_correct']:.0%} "
+            f"| {o['fabrication_rate']:.0%} | `{r['artefact']}` |"
         )
 
     print("\nPer category (answer correct):")
@@ -180,7 +189,7 @@ def print_table(results: list[dict]) -> None:
         for category in CATEGORIES:
             summary = r["metrics"]["per_category"].get(category)
             cells.append(f"{summary['answer_correct']:.0%}" if summary else "-")
-        print(f"| {r['config']} | " + " | ".join(cells) + f" | `runs/{r['artefact']}` |")
+        print(f"| {r['config']} | " + " | ".join(cells) + f" | `{r['artefact']}` |")
 
 
 def main() -> int:

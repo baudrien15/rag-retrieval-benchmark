@@ -48,24 +48,32 @@ Do not model this on any real business. All content is invented.
 
 ## Test set design
 
-30 questions, in four categories. The category split is what makes the
+65 questions, in four categories. The category split is what makes the
 final report diagnostic rather than promotional.
+
+The first 30 are the original set and their wording and annotations are
+frozen. Questions 31-65 were added with the corpus expansion and target
+the confusable clusters.
 
 | Category | Count | Purpose |
 |----------|-------|---------|
-| `exact_term` | ~10 | Prices, treatment names, durations. Expect dense to underperform. |
-| `semantic` | ~8 | Paraphrase, indirect phrasing. Expect dense to do fine. |
-| `multi_fact` | ~6 | Answer requires two documents. |
-| `out_of_scope` | ~6 | No correct document exists. Correct behaviour is escalation. |
+| `exact_term` | 29 | Prices, treatment names, durations. Expect dense to underperform. |
+| `semantic` | 15 | Paraphrase, indirect phrasing. Expect dense to do fine. |
+| `multi_fact` | 12 | Answer requires two documents. |
+| `out_of_scope` | 9 | No correct document exists. Correct behaviour is escalation. |
 
 Reporting `semantic` honestly — where hybrid gives little or no gain —
 is required. A table where every category improves looks fabricated.
 
 ## Metrics
 
-Three, no more:
+Four, no more:
 
 1. **hit@3** — is a correct document in the top 3? (pure retrieval)
+1b. **hit@1** — is a correct document ranked first? Added with the
+    corpus expansion: once the corpus holds clusters of near-identical
+    documents, rank 1 is where "right cluster, wrong member" shows up,
+    and hit@3 hides it.
 2. **answer_correct** — LLM judge, binary, against the expected answer
 3. **fabrication_rate** — on `out_of_scope` only: share of questions
    answered instead of escalated
@@ -108,6 +116,13 @@ paragraph above — the substitution is not visible from the code.
 
 One document = one chunk. Documents are written short enough for this
 to be reasonable.
+
+**The corpus holds deliberate confusable clusters** — groups of
+near-identical documents differing mainly in their exact values (twelve
+massages, eight facials, eight body treatments, six spa days, five
+category-specific cancellation windows). That similarity is the
+experiment, not an accident of writing. A new document must never
+restate a value an existing document already owns.
 
 **Do not optimise chunking.** It is a second variable and it is out of
 scope. If a document is too long for one chunk, shorten the document.
