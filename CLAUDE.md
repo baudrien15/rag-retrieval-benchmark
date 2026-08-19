@@ -159,7 +159,16 @@ python src/validate_testset.py   # corpus <-> testset consistency; stdlib only
 python src/ingest.py             # rebuild the collection from data/corpus/
 python src/query_check.py        # manual retrieval check, 4 sample questions
 python src/query_check.py "..."  # same, on an ad-hoc question
+
+python src/build_oos_probe.py    # rebuild data/oos_probe.json from the test set
+python src/oos_probe.py          # 20 out-of-scope questions x 3 configs
 ```
+
+The probe measures fabrication on a denominator of 20 instead of 9, and
+nothing else. It does not touch `data/testset.json` and produces no
+retrieval metrics — every probe question has an empty `expected_doc_ids`.
+Adding a question to it means adding its subject to the forbidden-topics
+list in the phase 1 spec first.
 
 Phase 5 — the serving demo. Not part of the benchmark; nothing here can
 change a published number.

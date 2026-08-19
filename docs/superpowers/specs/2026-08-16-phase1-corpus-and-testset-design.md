@@ -172,14 +172,19 @@ rejected — every configuration would escalate correctly and
 
 ### Forbidden topics
 
-These nine subjects must never be covered by any corpus document. If one
-is added later, the corresponding question stops being out of scope and
-the annotation becomes false.
+These twenty subjects must never be covered by any corpus document. If
+one is added later, the corresponding question stops being out of scope
+and the annotation becomes false.
 
 Subjects 7-9 were added with the corpus expansion. Subject 6 was very
 nearly broken by it: a draft of `massage_aroma_candle` said the candle
 is not taken home, which answers q30. See
 `docs/annotation-review-expansion.md`.
+
+Subjects 10-20 were added with the out-of-scope probe
+(`data/oos_probe.json`), which raises the fabrication denominator from 9
+to 20. Each was checked to have zero occurrences across all 62 documents
+before its question was written.
 
 1. Laser hair removal, or any treatment not on the price lists
 2. Health insurance, reimbursement, mutuelle
@@ -195,8 +200,30 @@ is not taken home, which answers q30. See
 8. Accommodation, overnight stays, rooms (added with the expansion, q62)
 9. Treatments performed at the customer's home (added with the
    expansion, q63)
+10. Acupuncture (probe01)
+11. Cupping (probe02)
+12. Botox, fillers, any injectable (probe03)
+13. Eyelash extensions (probe04)
+14. Teeth whitening (probe05)
+15. Osteopathy, physiotherapy, chiropractic (probe06)
+16. Nutrition, dietetics, weight-loss programmes (probe07)
+17. Reiki and energy work (probe08)
+18. Hypnotherapy (probe09)
+19. Recruitment, job vacancies, working at the centre (probe10)
+20. Certificates or attendance notes written for a third party
+    (probe11) — distinct from subject 4, which is about billing
 
 Re-read this list against the corpus whenever a document is edited.
+
+**Subjects adjacent to a list the corpus states exhaustively were
+rejected while drafting the probe**, and the reasoning is worth keeping.
+A question about a swimming pool or a tanning bed reads as out of scope,
+but `facilities` enumerates the facilities and states that the sauna and
+hammam are "our two heat facilities". An assistant answering "no, there
+is no pool" from that enumeration would be reasoning correctly and would
+be scored as a fabrication. The same objection ruled out yoga classes,
+since `cancellation_workshops` establishes that scheduled group
+workshops exist without ever saying what they are.
 
 ## `treatments_body` points nowhere on purpose
 

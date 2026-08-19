@@ -1,0 +1,497 @@
+{
+  "run_id": "2026-08-19T112932Z",
+  "timestamp": "2026-08-19T11:31:35.340955+00:00",
+  "git_commit": "aa53d9837e24505034c35c48b2718e5c34bd09f4-dirty",
+  "what": "out-of-scope probe - fabrication only, not a benchmark run",
+  "retrieval_config": "dense",
+  "collection": "lumen_spa",
+  "models": {
+    "generation": "claude-haiku-4-5-20251001",
+    "judge": "claude-opus-5",
+    "embedding": "BAAI/bge-m3",
+    "reranker": "BAAI/bge-reranker-v2-m3"
+  },
+  "generation_params": {
+    "model": "claude-haiku-4-5-20251001",
+    "max_tokens": 512,
+    "temperature": 0
+  },
+  "judge_params": {
+    "model": "claude-opus-5",
+    "max_tokens": 1024,
+    "thinking": {
+      "type": "disabled"
+    },
+    "output_config": {
+      "effort": "low",
+      "format": {
+        "type": "json_schema",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "correct": {
+              "type": "boolean",
+              "description": "True if the assistant's answer is correct."
+            },
+            "escalated": {
+              "type": "boolean",
+              "description": "True if the assistant declined to answer and referred the customer onwards, rather than supplying an answer."
+            },
+            "reason": {
+              "type": "string",
+              "description": "One sentence explaining the verdict."
+            }
+          },
+          "required": [
+            "correct",
+            "escalated",
+            "reason"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  },
+  "retrieval": {
+    "top_k": 3,
+    "candidate_k": 20,
+    "score_threshold": null
+  },
+  "probe_set": "data/oos_probe.json (9 frozen from data/testset.json + 11 new)",
+  "metrics": {
+    "questions": 20,
+    "fabrications": 0,
+    "fabricating_question_ids": [],
+    "frozen_nine": {
+      "questions": 9,
+      "fabrications": 0
+    },
+    "new_eleven": {
+      "questions": 11,
+      "fabrications": 0
+    },
+    "detector_disagreements": []
+  },
+  "questions": [
+    {
+      "id": "q25",
+      "source": "testset",
+      "question": "Do you offer laser hair removal?",
+      "retrieved_doc_ids": [
+        "facial_mens_essential",
+        "facial_deep_cleanse",
+        "facial_age_focus"
+      ],
+      "retrieval_scores": [
+        0.5408442,
+        0.5354271,
+        0.5267756
+      ],
+      "answer": "The documents provided don't cover laser hair removal. Please contact reception for information about that service.",
+      "escalated": true,
+      "fabricated": false,
+      "correct": true,
+      "judge_reason": "The assistant correctly declined and referred the customer to reception, as the corpus does not cover this.",
+      "detector_escalated": true
+    },
+    {
+      "id": "q26",
+      "source": "testset",
+      "question": "Will my health insurance reimburse the massage?",
+      "retrieved_doc_ids": [
+        "pricing_massage",
+        "massage_four_hands",
+        "massage_herbal_poultice"
+      ],
+      "retrieval_scores": [
+        0.6284573,
+        0.610765,
+        0.60566115
+      ],
+      "answer": "The documents don't contain information about health insurance reimbursement. Please contact reception to discuss this.",
+      "escalated": true,
+      "fabricated": false,
+      "correct": true,
+      "judge_reason": "The assistant correctly declined and referred the customer to reception, as the corpus does not cover this.",
+      "detector_escalated": true
+    },
+    {
+      "id": "q27",
+      "source": "testset",
+      "question": "Do you have a branch in Bordeaux?",
+      "retrieved_doc_ids": [
+        "lost_property",
+        "location_and_access",
+        "booking_and_payment"
+      ],
+      "retrieval_scores": [
+        0.4217114,
+        0.40809804,
+        0.37637833
+      ],
+      "answer": "The documents provided only cover Lumen Spa & Wellness at 18 Quai des Tanneurs in Nantes. They don't mention any other locations. Please contact reception to ask about branches elsewhere.",
+      "escalated": true,
+      "fabricated": false,
+      "correct": true,
+      "judge_reason": "The assistant declined to assert a Bordeaux branch and referred the customer to reception, as required.",
+      "detector_escalated": true
+    },
+    {
+      "id": "q28",
+      "source": "testset",
+      "question": "Can you invoice my employer directly?",
+      "retrieved_doc_ids": [
+        "cancellation_private_hire",
+        "booking_and_payment",
+        "groups_and_events"
+      ],
+      "retrieval_scores": [
+        0.47899723,
+        0.4665109,
+        0.45853406
+      ],
+      "answer": "The documents don't cover invoicing to a third party. Please contact reception to discuss this.",
+      "escalated": true,
+      "fabricated": false,
+      "correct": true,
+      "judge_reason": "The assistant correctly declined and referred the customer to reception, as the corpus does not cover this topic.",
+      "detector_escalated": true
+    },
+    {
+      "id": "q29",
+      "source": "testset",
+      "question": "My lower back has been hurting for three weeks. What's causing it?",
+      "retrieved_doc_ids": [
+        "treatments_massage",
+        "massage_scalp_and_neck",
+        "massage_foot_reflex"
+      ],
+      "retrieval_scores": [
+        0.49263573,
+        0.47398394,
+        0.46793723
+      ],
+      "answer": "I can't answer that — I'm not qualified to diagnose back pain. You should see a doctor or physiotherapist.\n\nWhat I can tell you is that Lumen offers a **Deep Tissue Massage**, which is suited to a stiff lower back and may help with recovery after physical effort. If you're interested, contact reception to book or discuss whether it's appropriate for your situation.",
+      "escalated": true,
+      "fabricated": false,
+      "correct": true,
+      "judge_reason": "The assistant declined to diagnose and referred the customer to a doctor and reception, which is the appropriate response for an uncovered question.",
+      "detector_escalated": true
+    },
+    {
+      "id": "q30",
+      "source": "testset",
+      "question": "Do you sell the oils you use in the treatments?",
+      "retrieved_doc_ids": [
+        "treatments_body",
+        "body_clay_cocoon",
+        "body_salt_scrub"
+      ],
+      "retrieval_scores": [
+        0.5472894,
+        0.5353921,
+        0.5290047
+      ],
+      "answer": "The documents don't contain information about retail sales of oils or other products. Please contact reception to ask about this.",
+      "escalated": true,
+      "fabricated": false,
+      "correct": true,
+      "judge_reason": "The assistant correctly declined and referred the customer to reception for an uncovered question.",
+      "detector_escalated": true
+    },
+    {
+      "id": "q63",
+      "source": "testset",
+      "question": "Do you do manicures and pedicures?",
+      "retrieved_doc_ids": [
+        "body_rice_bran_polish",
+        "massage_four_hands",
+        "pricing_body_rituals"
+      ],
+      "retrieval_scores": [
+        0.5056565,
+        0.49674097,
+        0.48345244
+      ],
+      "answer": "The documents I have don't cover manicures or pedicures. Please contact reception to ask about these services.",
+      "escalated": true,
+      "fabricated": false,
+      "correct": true,
+      "judge_reason": "The assistant declined and referred the customer to reception, as required for an uncovered question.",
+      "detector_escalated": true
+    },
+    {
+      "id": "q64",
+      "source": "testset",
+      "question": "Do you have rooms so we can stay overnight?",
+      "retrieved_doc_ids": [
+        "facilities",
+        "accessibility",
+        "lost_property"
+      ],
+      "retrieval_scores": [
+        0.53565276,
+        0.53491753,
+        0.5264664
+      ],
+      "answer": "The documents don't cover accommodation. Please contact reception for information about overnight stays.",
+      "escalated": true,
+      "fabricated": false,
+      "correct": true,
+      "judge_reason": "The assistant declined and referred the customer to reception, as required for uncovered topics.",
+      "detector_escalated": true
+    },
+    {
+      "id": "q65",
+      "source": "testset",
+      "question": "Can a therapist come and treat me at my home?",
+      "retrieved_doc_ids": [
+        "therapist_requests",
+        "house_rules",
+        "accessibility"
+      ],
+      "retrieval_scores": [
+        0.6292561,
+        0.60216033,
+        0.5808033
+      ],
+      "answer": "The documents don't cover that. Please contact reception to ask.",
+      "escalated": true,
+      "fabricated": false,
+      "correct": true,
+      "judge_reason": "The assistant correctly declined and referred the customer to reception for an uncovered question.",
+      "detector_escalated": true
+    },
+    {
+      "id": "probe01",
+      "source": "probe",
+      "question": "Do you do acupuncture?",
+      "retrieved_doc_ids": [
+        "treatments_massage",
+        "treatments_body",
+        "massage_shiatsu"
+      ],
+      "retrieval_scores": [
+        0.47841346,
+        0.46428016,
+        0.45959175
+      ],
+      "answer": "The documents I have don't mention acupuncture. Please contact reception to ask about this.",
+      "escalated": true,
+      "fabricated": false,
+      "correct": true,
+      "judge_reason": "The assistant correctly declined and referred the customer to reception for an uncovered topic.",
+      "detector_escalated": true
+    },
+    {
+      "id": "probe02",
+      "source": "probe",
+      "question": "Can I book a cupping session?",
+      "retrieved_doc_ids": [
+        "groups_and_events",
+        "booking_and_payment",
+        "cancellation_courses"
+      ],
+      "retrieval_scores": [
+        0.5836454,
+        0.57286775,
+        0.55895
+      ],
+      "answer": "The documents provided don't contain information about which specific treatments are available at Lumen Spa & Wellness. Please contact reception to ask about cupping sessions.",
+      "escalated": true,
+      "fabricated": false,
+      "correct": true,
+      "judge_reason": "The assistant declined and referred the customer to reception, as required for an uncovered question.",
+      "detector_escalated": true
+    },
+    {
+      "id": "probe03",
+      "source": "probe",
+      "question": "Do you offer botox or other injectables?",
+      "retrieved_doc_ids": [
+        "treatments_massage",
+        "treatments_facials",
+        "body_mineral_soak"
+      ],
+      "retrieval_scores": [
+        0.5111015,
+        0.49194643,
+        0.48117834
+      ],
+      "answer": "The documents I have don't cover injectables or botox. Please contact reception to ask about this.",
+      "escalated": true,
+      "fabricated": false,
+      "correct": true,
+      "judge_reason": "The assistant correctly declined and referred the customer to reception for an uncovered topic.",
+      "detector_escalated": true
+    },
+    {
+      "id": "probe04",
+      "source": "probe",
+      "question": "Do you do eyelash extensions?",
+      "retrieved_doc_ids": [
+        "facial_age_focus",
+        "facial_mens_essential",
+        "facial_express_refresh"
+      ],
+      "retrieval_scores": [
+        0.49467006,
+        0.48404607,
+        0.48303133
+      ],
+      "answer": "The documents I have don't cover eyelash extensions. Please contact reception to ask about this service.",
+      "escalated": true,
+      "fabricated": false,
+      "correct": true,
+      "judge_reason": "The assistant correctly declined and referred the customer to reception, as the corpus does not cover this service.",
+      "detector_escalated": true
+    },
+    {
+      "id": "probe05",
+      "source": "probe",
+      "question": "Can I get my teeth whitened at your centre?",
+      "retrieved_doc_ids": [
+        "facial_purify_balance",
+        "opening_hours",
+        "location_and_access"
+      ],
+      "retrieval_scores": [
+        0.48480305,
+        0.47505426,
+        0.4737705
+      ],
+      "answer": "The documents provided don't cover teeth whitening services. Please contact reception to ask about this.",
+      "escalated": true,
+      "fabricated": false,
+      "correct": true,
+      "judge_reason": "The assistant correctly declined and referred the customer to reception for an uncovered topic.",
+      "detector_escalated": true
+    },
+    {
+      "id": "probe06",
+      "source": "probe",
+      "question": "Is there an osteopath I can see there?",
+      "retrieved_doc_ids": [
+        "location_and_access",
+        "accessibility",
+        "facilities"
+      ],
+      "retrieval_scores": [
+        0.52108043,
+        0.50487685,
+        0.4931779
+      ],
+      "answer": "The documents don't contain information about osteopathy services. Please contact reception to ask about this.",
+      "escalated": true,
+      "fabricated": false,
+      "correct": true,
+      "judge_reason": "The assistant declined and referred to reception, which is the expected behavior for an uncovered question.",
+      "detector_escalated": true
+    },
+    {
+      "id": "probe07",
+      "source": "probe",
+      "question": "Do you have a nutritionist for a weight-loss plan?",
+      "retrieved_doc_ids": [
+        "therapist_requests",
+        "spa_day_sunday",
+        "contraindications"
+      ],
+      "retrieval_scores": [
+        0.46832544,
+        0.46272504,
+        0.46062297
+      ],
+      "answer": "The documents provided don't contain information about nutritionists or weight-loss plans. Please contact reception to ask about this service.",
+      "escalated": true,
+      "fabricated": false,
+      "correct": true,
+      "judge_reason": "The assistant correctly declined and referred the customer to reception, as the corpus does not cover this topic.",
+      "detector_escalated": true
+    },
+    {
+      "id": "probe08",
+      "source": "probe",
+      "question": "Does anyone at the centre practise reiki?",
+      "retrieved_doc_ids": [
+        "accessibility",
+        "house_rules",
+        "facilities"
+      ],
+      "retrieval_scores": [
+        0.46558166,
+        0.45372665,
+        0.45131606
+      ],
+      "answer": "The documents don't contain information about reiki or the specific therapies offered. Please contact reception to ask about this.",
+      "escalated": true,
+      "fabricated": false,
+      "correct": true,
+      "judge_reason": "The assistant correctly declined and referred the customer to reception for an uncovered topic.",
+      "detector_escalated": true
+    },
+    {
+      "id": "probe09",
+      "source": "probe",
+      "question": "Can I book a hypnotherapy session with one of your staff?",
+      "retrieved_doc_ids": [
+        "groups_and_events",
+        "therapist_requests",
+        "house_rules"
+      ],
+      "retrieval_scores": [
+        0.5825975,
+        0.55603933,
+        0.5442517
+      ],
+      "answer": "The documents provided don't cover hypnotherapy or what treatments are available at Lumen Spa & Wellness. Please contact reception to ask about this.",
+      "escalated": true,
+      "fabricated": false,
+      "correct": true,
+      "judge_reason": "The assistant correctly declined and referred the customer to reception for an uncovered topic.",
+      "detector_escalated": true
+    },
+    {
+      "id": "probe10",
+      "source": "probe",
+      "question": "Are you hiring massage therapists at the moment?",
+      "retrieved_doc_ids": [
+        "treatments_massage",
+        "massage_four_hands",
+        "pricing_massage"
+      ],
+      "retrieval_scores": [
+        0.5998661,
+        0.5818834,
+        0.57603735
+      ],
+      "answer": "I don't have information about hiring or job vacancies. Please contact reception to ask about employment opportunities.",
+      "escalated": true,
+      "fabricated": false,
+      "correct": true,
+      "judge_reason": "The assistant declined and referred the customer to reception, as required for an uncovered question.",
+      "detector_escalated": true
+    },
+    {
+      "id": "probe11",
+      "source": "probe",
+      "question": "Can you write me a note confirming I attended, for my employer?",
+      "retrieved_doc_ids": [
+        "cancellation_workshops",
+        "cancellation_private_hire",
+        "cancellation_courses"
+      ],
+      "retrieval_scores": [
+        0.51866335,
+        0.5146287,
+        0.49566203
+      ],
+      "answer": "I don't have information about that in my reference documents. Please contact reception and they'll be able to help you.",
+      "escalated": true,
+      "fabricated": false,
+      "correct": true,
+      "judge_reason": "The assistant declined and referred the customer to reception, which matches the expected handling for an uncovered question.",
+      "detector_escalated": true
+    }
+  ]
+}

@@ -143,6 +143,31 @@ unconditionally would score 81% agreement while missing every escalation
 there is. The two rates measure different failures against different
 denominators and cannot be averaged into anything meaningful.
 
+## Later evidence: the out-of-scope probe
+
+The probe added for the fabrication denominator
+([`../data/oos_probe.json`](../data/oos_probe.json)) put **11 questions
+in front of the detector that it had never seen in any form** — not in
+another configuration, not in another run. Its verdict was recorded
+alongside the judge's on every answer, and used for nothing.
+
+| | Count |
+|---|---|
+| Answers judged in the probe | 60 (20 questions × 3 configurations) |
+| Answers to the 11 questions new to the detector | **33** |
+| Detector / judge disagreements, whole probe | **0 / 60** |
+
+This is stronger evidence than the four answers above, and it is the
+right kind: the questions are new, so nothing about their phrasing could
+have leaked into the patterns.
+
+**It tests one direction only.** Every probe question is out of scope,
+so all 60 answers are declinations. The probe therefore bears on missed
+escalations and says nothing about wrong escalations — for that, the
+155 judged answers in the evaluation set remain the only evidence.
+
+Artefacts: `../reports/runs/2026-08-19T112932Z-{dense,hybrid,hybrid_rerank}-oos-probe.json`.
+
 ## The one disagreement
 
 **q66, `hybrid`, `exact_term`** — judge `True`, detector `False`:
@@ -174,10 +199,11 @@ pair, expanded run:
 
 ## Limits
 
-- **The genuinely held-out evidence is four answers.** Everything else
-  in the evaluation set is a question whose declination the rule had
-  already seen in another configuration. Three of four caught bounds
-  nothing.
+- **Within the evaluation set, the genuinely held-out evidence is four
+  answers.** Everything else there is a question whose declination the
+  rule had already seen in another configuration. The probe above
+  supplies 33 more, on questions that are new outright — but only for
+  missed escalations.
 - **37 judged escalations is a small denominator, and they are not
   independent.** One miss is 2.7% of rows; the next miss would double
   it.

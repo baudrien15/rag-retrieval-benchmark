@@ -170,6 +170,57 @@ apply to a process that had already imported the module.
 
 ---
 
+## Probe 2026-08-19 — out-of-scope only, 20 questions
+
+**Not a benchmark run.** It measures one metric, fabrication, on a larger
+denominator. `hit@1` and `hit@3` are not computed: every question here
+has an empty `expected_doc_ids`, so retrieval metrics are undefined by
+construction. Nothing in the run above changes, and `data/testset.json`
+is untouched.
+
+**Why.** Nine out-of-scope questions with no fabrication bound the true
+rate at roughly 33% by the rule of three — the weakest number in this
+repository, and weak because of the denominator rather than the
+observation. Twenty bound it at roughly 15%.
+
+**Config:** as in run 2026-08-18-2 — same models, same parameters, same
+imports, so a fabrication counted here means what it means above.
+**Question set:** `data/oos_probe.json` — the 9 out-of-scope questions
+copied from `data/testset.json` by `src/build_oos_probe.py`, plus 11 new
+subjects, each checked to have zero occurrences across the 62 documents
+and recorded in the forbidden-topics list.
+
+| Config | Questions | Fabrications | frozen 9 | new 11 | Artefact |
+|--------|-----------|--------------|----------|--------|----------|
+| dense | 20 | **0 / 20** | 0 / 9 | 0 / 11 | `runs/2026-08-19T112932Z-dense-oos-probe.json` |
+| hybrid | 20 | **0 / 20** | 0 / 9 | 0 / 11 | `runs/2026-08-19T112932Z-hybrid-oos-probe.json` |
+| hybrid_rerank | 20 | **0 / 20** | 0 / 9 | 0 / 11 | `runs/2026-08-19T112932Z-hybrid_rerank-oos-probe.json` |
+
+**No fabrication observed on 20 out-of-scope questions** per
+configuration — 60 asked in total, not one answered instead of
+escalated. The rule of three puts the 95% bound at roughly **15%**,
+against 33% before. The generation prompt holds on subjects it has never
+been tested against.
+
+**Eleven subjects were drafted and rejected**, and the reason is the
+result worth keeping. A question about a swimming pool or a tanning bed
+looks out of scope, but `facilities` enumerates the facilities and calls
+the sauna and hammam "our two heat facilities". An assistant answering
+"there is no pool" from that enumeration is reasoning correctly and
+would be counted as fabricating. The measurement would have been wrong
+in the direction that flatters nobody — see the forbidden-topics section
+of the phase 1 spec.
+
+### Detector evidence, recorded in passing
+
+Each answer also carries the verdict of `src/escalation.py`, used for
+nothing here. Eleven of the twenty questions were new to it: **33
+answers, 0 disagreements with the judge, 0/60 across the whole probe.**
+All 60 answers are declinations, so this bears on missed escalations
+only. See `docs/escalation-detector.md`.
+
+---
+
 ## Run 2026-08-18-1 — original corpus (superseded: saturated)
 
 **Config:** as above.

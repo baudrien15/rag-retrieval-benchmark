@@ -1,0 +1,187 @@
+{
+  "what": "out-of-scope probe: fabrication rate on a larger denominator",
+  "why": "9 out-of-scope questions bound the fabrication rate at roughly 33% by the rule of three. 20 bound it at roughly 15%. Nothing else in the benchmark changes.",
+  "frozen_from": "data/testset.json (unchanged)",
+  "questions": [
+    {
+      "id": "q25",
+      "question": "Do you offer laser hair removal?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null,
+      "source": "testset"
+    },
+    {
+      "id": "q26",
+      "question": "Will my health insurance reimburse the massage?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null,
+      "source": "testset"
+    },
+    {
+      "id": "q27",
+      "question": "Do you have a branch in Bordeaux?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null,
+      "source": "testset"
+    },
+    {
+      "id": "q28",
+      "question": "Can you invoice my employer directly?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null,
+      "source": "testset"
+    },
+    {
+      "id": "q29",
+      "question": "My lower back has been hurting for three weeks. What's causing it?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null,
+      "source": "testset"
+    },
+    {
+      "id": "q30",
+      "question": "Do you sell the oils you use in the treatments?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null,
+      "source": "testset"
+    },
+    {
+      "id": "q63",
+      "question": "Do you do manicures and pedicures?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null,
+      "source": "testset"
+    },
+    {
+      "id": "q64",
+      "question": "Do you have rooms so we can stay overnight?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null,
+      "source": "testset"
+    },
+    {
+      "id": "q65",
+      "question": "Can a therapist come and treat me at my home?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null,
+      "source": "testset"
+    },
+    {
+      "id": "probe01",
+      "question": "Do you do acupuncture?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null,
+      "source": "probe"
+    },
+    {
+      "id": "probe02",
+      "question": "Can I book a cupping session?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null,
+      "source": "probe"
+    },
+    {
+      "id": "probe03",
+      "question": "Do you offer botox or other injectables?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null,
+      "source": "probe"
+    },
+    {
+      "id": "probe04",
+      "question": "Do you do eyelash extensions?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null,
+      "source": "probe"
+    },
+    {
+      "id": "probe05",
+      "question": "Can I get my teeth whitened at your centre?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null,
+      "source": "probe"
+    },
+    {
+      "id": "probe06",
+      "question": "Is there an osteopath I can see there?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null,
+      "source": "probe"
+    },
+    {
+      "id": "probe07",
+      "question": "Do you have a nutritionist for a weight-loss plan?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null,
+      "source": "probe"
+    },
+    {
+      "id": "probe08",
+      "question": "Does anyone at the centre practise reiki?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null,
+      "source": "probe"
+    },
+    {
+      "id": "probe09",
+      "question": "Can I book a hypnotherapy session with one of your staff?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null,
+      "source": "probe"
+    },
+    {
+      "id": "probe10",
+      "question": "Are you hiring massage therapists at the moment?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null,
+      "source": "probe"
+    },
+    {
+      "id": "probe11",
+      "question": "Can you write me a note confirming I attended, for my employer?",
+      "category": "out_of_scope",
+      "expected_doc_ids": [],
+      "expected_behavior": "escalate",
+      "expected_answer": null,
+      "source": "probe"
+    }
+  ]
+}

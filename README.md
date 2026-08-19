@@ -80,10 +80,18 @@ category, with every row citing its run artefact: [`RESULTS.md`](RESULTS.md).
 | **`hybrid_rerank`** | **91%** | **100%** | **89%** | 0 / 9 |
 
 Fabrication is reported as a count, not a rate: **no fabrication was
-observed on 9 out-of-scope questions** per configuration. At that sample
-size the true rate is bounded at roughly **33% at worst** (rule of three,
-95% confidence interval), so a bare "0%" would state a precision the
-measurement does not have.
+observed on 9 out-of-scope questions** per configuration in this run. At
+that sample size the true rate is bounded at roughly **33% at worst**
+(rule of three, 95% confidence interval), so a bare "0%" would state a
+precision the measurement does not have.
+
+That denominator was the weakest number here, so it was **measured
+again on a bigger one**: a separate 20-question out-of-scope probe, same
+models and parameters, returned **no fabrication on 20 questions** per
+configuration — 60 asked, none answered instead of escalated. The bound
+tightens from 33% to roughly **15%**. The probe leaves `data/testset.json`
+frozen and changes no other metric; see the probe section in
+[`RESULTS.md`](RESULTS.md).
 
 **Reranking is the only intervention that pays.** Its gain over `hybrid`
 (93% → 100% hit@3) is the signature of a reranker working as intended:
@@ -170,8 +178,8 @@ would make this worse rather than better:
 
 ## How this repository checks itself
 
-Five self-checks, each producing a committed artefact rather than a
-claim. Four are scripts anyone can rerun; the other was done by hand
+Six self-checks, each producing a committed artefact rather than a
+claim. Five are scripts anyone can rerun; the other was done by hand
 because no script can do it.
 
 | Check | Question it answers | Result |
@@ -180,6 +188,7 @@ because no script can do it.
 | [`src/judge_stability.py`](src/judge_stability.py) | Is the judge repeatable? | 98.5% on `correct`, 100% on `escalated` - [`docs/judge-reliability.md`](docs/judge-reliability.md) |
 | [`src/lexical_overlap.py`](src/lexical_overlap.py) | Were the newer questions phrased in a way that favours sparse retrieval? | a real **+24 point** confound found in `multi_fact` and removed; **+1.7 points** residual - [`docs/testset-bias-check.md`](docs/testset-bias-check.md) |
 | [`src/escalation_eval.py`](src/escalation_eval.py) | Does the serving-time escalation detector agree with the judge on configurations it was not written against? | 1 missed escalation of 37 rows, 0 wrong escalations of 155 - but the split is by configuration, not by question, so the genuinely unseen evidence is **3 of 4 answers** - [`docs/escalation-detector.md`](docs/escalation-detector.md) |
+| [`src/oos_probe.py`](src/oos_probe.py) | Is "no fabrication" an artefact of asking only 9 out-of-scope questions? | no - **0 fabrications on 20 questions** per configuration, bound tightened from 33% to ~15% - probe section of [`RESULTS.md`](RESULTS.md) |
 | annotation review, by hand | Did expanding the corpus silently break an existing annotation? | one `out_of_scope` question was **nearly inverted** and caught - [`docs/annotation-review-expansion.md`](docs/annotation-review-expansion.md) |
 
 The detector's single failure is q66, the question already recorded as
@@ -200,7 +209,8 @@ found by reading 44 new documents against 30 existing questions.
 out-of-scope questions** in any of the three configurations - 27
 out-of-scope questions asked in total, not one answered instead of
 escalated. At that sample size the true rate is bounded at roughly **33%
-at worst** (rule of three, 95% confidence interval). At this scale and on
+at worst** (rule of three, 95% confidence interval); the later
+20-question probe brings that to roughly **15%**. At this scale and on
 this corpus,
 fabrication is not the dominant failure mode. Retrieving the wrong
 member of a confusable cluster is, and a confidence threshold does not
@@ -255,10 +265,11 @@ much:
 - Synthetic corpus. Real support corpora are messier, longer, and
   contradict themselves.
 - 66 questions is enough to see a direction, not enough for tight
-  confidence intervals. The out-of-scope category is 9 questions, so
-  **no fabrication observed on 9 out-of-scope questions** bounds the true
-  rate at roughly **33% at worst** (rule of three, 95% confidence
-  interval) - it cannot be distinguished from a merely low one.
+  confidence intervals. The out-of-scope category in the benchmark run
+  is 9 questions, bounding the fabrication rate at roughly **33% at
+  worst** (rule of three, 95% confidence interval). The separate
+  20-question probe tightens that to roughly **15%** - better, and still
+  not a rate that can be called zero.
 - **`answer_correct` is biased downwards, in a known direction and an
   unknown quantity** - see the judge section above. `hit@1` and `hit@3`
   do not pass through the judge and carry none of that uncertainty.

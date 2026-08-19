@@ -56,12 +56,26 @@ judge and carry none of its uncertainty.
 **Judge agreement: 98.5% (195/198)**, with the variance concentrated on a
 single mechanism.
 
-**The fabrication rate is never written as "0%".** The observation is
-**zero fabrications on 9 out-of-scope questions**, which bounds the true
-rate at roughly **33% at worst** (rule of three, 95% confidence
-interval). The mandatory phrasing, everywhere including the README, is:
+**The fabrication rate is never written as "0%".** The mandatory
+phrasing, everywhere including the README, is a count with its
+denominator:
 
-> no fabrication observed on 9 out-of-scope questions
+> no fabrication observed on N out-of-scope questions
 
 followed by the bound. A bare "0%" states a precision the sample size
 does not support.
+
+Two denominators are now in play, and each belongs to its own
+measurement:
+
+| Denominator | Where it applies | 95% bound (rule of three) |
+|---|---|---|
+| **9** | the `out_of_scope` category of run 2026-08-18-2, in `RESULTS.md` | ~33% |
+| **20** | the out-of-scope probe of 2026-08-19, `data/oos_probe.json` | ~15% |
+
+The probe was added on 2026-08-19 because the denominator, not the
+observation, was the weak part. It leaves `data/testset.json` frozen and
+moves no other metric. **The principle is unchanged** — count,
+denominator, bound — only the best available denominator improved. Quote
+the 20 where the claim is about fabrication generally; quote the 9 where
+the claim is about the benchmark run's `out_of_scope` category.

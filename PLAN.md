@@ -164,6 +164,15 @@ threshold itself.
 
 **Done when:** a justified cutoff plus before/after numbers.
 
+**Follow-up, 2026-08-19: the denominator was the weak part, so it was
+enlarged.** A separate 20-question out-of-scope probe
+(`data/oos_probe.json`, `src/oos_probe.py`) returned no fabrication on
+20 questions per configuration, tightening the rule-of-three bound from
+roughly 33% to roughly 15%. `data/testset.json` stays frozen and no
+other metric moves: folding the questions into the test set would have
+taken `out_of_scope` from 14% to 26% of it, inflating every aggregate in
+the category where all three configurations already score 100%.
+
 ---
 
 ## Phase 5 — Workflow demo
