@@ -1,9 +1,9 @@
 {
-  "name": "Lumen Spa support - retrieval and escalation",
+  "name": "RAG support - retrieval and escalation",
   "nodes": [
     {
       "parameters": {
-        "content": "## Setup\n\n**1. Start the service on the machine that holds the corpus:**\n```\nuvicorn service:app --app-dir src --port 8000\ncloudflared tunnel --url http://localhost:8000\n```\n\n**2. Paste the tunnel URL** into the `Ask the retrieval service` node.\n\n**3. Set `LUMEN_SERVICE_SECRET`** in this n8n instance's environment, to the same value the service reads. The tunnel URL is public: without the shared header the endpoint is an open Anthropic API key.\n\nRetrieval config is `hybrid_rerank`, `top_k=3` - the configuration measured in RESULTS.md.",
+        "content": "## Setup\n\n**1. Start the service on the machine that holds the corpus:**\n```\nuvicorn service:app --app-dir src --port 8000\ncloudflared tunnel --url http://localhost:8000\n```\n\n**2. Paste the tunnel URL** into the `Ask the retrieval service` node.\n\n**3. Set `RAG_SERVICE_SECRET`** in this n8n instance's environment, to the same value the service reads. The tunnel URL is public: without the shared header the endpoint is an open Anthropic API key.\n\nRetrieval config is `hybrid_rerank`, `top_k=3` - the configuration measured in RESULTS.md.",
         "height": 380,
         "width": 460
       },
@@ -16,7 +16,7 @@
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "lumen-support",
+        "path": "rag-support",
         "responseMode": "responseNode",
         "options": {}
       },
@@ -35,8 +35,8 @@
         "headerParameters": {
           "parameter": [
             {
-              "name": "X-Lumen-Secret",
-              "value": "={{ $env.LUMEN_SERVICE_SECRET }}"
+              "name": "X-Service-Secret",
+              "value": "={{ $env.RAG_SERVICE_SECRET }}"
             }
           ]
         },

@@ -257,6 +257,37 @@ python src/judge_stability.py reports/runs/*.json  # judge repeatability
 python src/score_distribution.py                   # threshold separation
 ```
 
+## Reusing this on another corpus
+
+The harness, the metrics, the judge, the escalation detector and the n8n
+workflow carry no domain name. What is domain-specific is the data, and
+it is four things:
+
+| Swap | What it is |
+|---|---|
+| `data/corpus/` | the documents. One file per document, one document per chunk |
+| `data/testset.json` | the questions and their `expected_doc_ids` |
+| one line of `GENERATION_SYSTEM` in `src/generation.py` | names the business the assistant works for |
+| `QDRANT_COLLECTION` in `.env` | the collection name |
+
+Then `python src/ingest.py`, `python src/validate_testset.py`, and
+`python src/harness.py`.
+
+**The published numbers do not travel with the code.** They are
+measurements of one corpus, and a new corpus means a new run. What
+transfers is the method — the category split, the per-category
+reporting, the run artefacts, the self-checks — and two findings that are
+about retrieval rather than about spas: a cross-encoder score is a usable
+confidence signal while an RRF score is not, and a benchmark whose
+documents are semantically distinct cannot separate retrieval methods at
+all.
+
+**The corpus is deliberately not anonymous.** A fictional business with
+a name, an address and consistent prices is what makes confusable
+clusters possible; a corpus of "Document A" and "Treatment 1" would not
+reproduce the failure this benchmark exists to measure. All of it is
+invented and no real business is modelled.
+
 ## Limitations
 
 Stated plainly, because a benchmark that hides its limits is not worth

@@ -50,7 +50,7 @@ def main() -> int:
     print("\nBranch 1 - in-scope question must route to the answer branch")
     served = service.answer(
         service.AskRequest(question=IN_SCOPE, conversation_id="test-in-scope"),
-        x_lumen_secret=SECRET,
+        x_service_secret=SECRET,
     )
     results.append(check(
         "escalated is False",
@@ -68,7 +68,7 @@ def main() -> int:
     print("\nBranch 2 - out-of-scope question must route to the escalation branch")
     escalated = service.answer(
         service.AskRequest(question=OUT_OF_SCOPE, conversation_id="test-oos"),
-        x_lumen_secret=SECRET,
+        x_service_secret=SECRET,
     )
     results.append(check(
         "escalated is True",
@@ -82,7 +82,7 @@ def main() -> int:
     try:
         service.answer(
             service.AskRequest(question=IN_SCOPE),
-            x_lumen_secret=None,
+            x_service_secret=None,
         )
         results.append(check("rejected", False, "the call succeeded without a secret"))
     except HTTPException as exc:

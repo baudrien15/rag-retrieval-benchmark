@@ -215,7 +215,7 @@ split is the better design for a rerun.
 - `src/service.py` — FastAPI front end, shared-secret header, imports
   `retrieval.py` and `generation.py` unchanged
 - `src/test_routing.py` — both branches end to end, passing 4/4
-- `n8n/lumen-support.json` — the canvas
+- `n8n/support-workflow.json` — the canvas
 - `docs/escalation-detector.md` — the rule, the split, both rates, the
   single disagreement
 

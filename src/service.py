@@ -16,7 +16,7 @@ generated answer and does not touch the generator — measured in
     uvicorn service:app --app-dir src --port 8000
     cloudflared tunnel --url http://localhost:8000
 
-Auth: every request must carry the shared secret in `X-Lumen-Secret`.
+Auth: every request must carry the shared secret in `X-Service-Secret`.
 The tunnel URL is public, so an unauthenticated endpoint here is an
 open Anthropic API key with extra steps.
 """
@@ -39,10 +39,10 @@ from retrieval import search_hybrid_rerank
 # the comparison is what RESULTS.md is for.
 CONFIG_ID = "hybrid_rerank"
 
-SHARED_SECRET = os.getenv("LUMEN_SERVICE_SECRET", "")
+SHARED_SECRET = os.getenv("RAG_SERVICE_SECRET", "")
 
 app = FastAPI(
-    title="Lumen Spa retrieval service",
+    title="RAG retrieval service",
     description="Serving front end for the n8n workflow demo.",
 )
 
@@ -62,10 +62,10 @@ def _authenticate(supplied: str | None) -> None:
     if not SHARED_SECRET:
         raise HTTPException(
             status_code=503,
-            detail="LUMEN_SERVICE_SECRET is not set; refusing to serve unauthenticated.",
+            detail="RAG_SERVICE_SECRET is not set; refusing to serve unauthenticated.",
         )
     if not supplied or not hmac.compare_digest(supplied, SHARED_SECRET):
-        raise HTTPException(status_code=401, detail="bad or missing X-Lumen-Secret")
+        raise HTTPException(status_code=401, detail="bad or missing X-Service-Secret")
 
 
 @app.get("/healthz")
@@ -77,7 +77,7 @@ def healthz() -> dict:
 @app.post("/answer")
 def answer(
     request: AskRequest,
-    x_lumen_secret: str | None = Header(default=None),
+    x_service_secret: str | None = Header(default=None),
 ) -> dict:
     """Retrieve, generate, and decide whether the answer can be served.
 
@@ -86,7 +86,7 @@ def answer(
     parse prose, and there is no path on which a missing field silently
     becomes "serve it".
     """
-    _authenticate(x_lumen_secret)
+    _authenticate(x_service_secret)
 
     hits = search_hybrid_rerank(request.question)
     generated = generate(request.question, hits)

@@ -181,8 +181,8 @@ uvicorn service:app --app-dir src --port 8000   # the endpoint n8n calls
 cloudflared tunnel --url http://localhost:8000  # expose it to the remote n8n
 ```
 
-`service.py` refuses to serve unless `LUMEN_SERVICE_SECRET` is set — the
-tunnel URL is public. `n8n/lumen-support.json` is the workflow to import.
+`service.py` refuses to serve unless `RAG_SERVICE_SECRET` is set — the
+tunnel URL is public. `n8n/support-workflow.json` is the workflow to import.
 
 `ingest.py` drops and recreates the collection every time. That is
 intentional — 18 documents are cheap to re-encode, and a rebuilt
